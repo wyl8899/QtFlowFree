@@ -19,7 +19,9 @@ SOURCES +=\
     Board.cpp \
     Point.cpp \
     test.cpp \
-    Grid.cpp
+    Grid.cpp \
+    Puzzle.cpp \
+    Pipe.cpp
 
 HEADERS  += MainWindow.h \
     Grid.h \
@@ -31,4 +33,6 @@ HEADERS  += MainWindow.h \
     Board.h \
     GameConfig.h \
     Puzzle.h \
-    test.h
+    test.h \
+    View.h \
+    common.h

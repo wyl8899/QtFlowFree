@@ -18,11 +18,12 @@ public:
 
     void startGame(GameConfig config) {
         puzzle = new Puzzle(config, this);
-        grid = new Grid(this->width(), config.numOfColors(), this);
+        grid = new Grid(this->width(), config.size, this);
     }
 private:
     Puzzle* puzzle;
     Grid* grid;
+    Scene* scene;
 };
 
 #endif // MAINWINDOW_H

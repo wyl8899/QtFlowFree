@@ -14,9 +14,11 @@ public:
     }
 
     void clear() {
-        for(auto &i : list) {
+        for(QGraphicsItem* i : list) {
             Scene::removeItem(i);
+            delete i;
         }
+        list.clear();
     }
 
     void addItem(QGraphicsItem* item) {

@@ -17,13 +17,20 @@ struct GameConfig {
         for (int i = 0; i < numOfColors; ++i) {
             int x, y, s, t;
             fin >> x >> y >> s >> t;
-            Point st(x, y), ed(s, t);
-            points.push_back(PointPair(st, ed));
+            add(x, y, s, t);
         }
     }
 
     inline int numOfColors() {
         return points.size();
+    }
+
+    void add(int stX, int stY, int edX, int edY) {
+        add(Point(stX, stY), Point(edX, edY));
+    }
+
+    void add(Point st, Point ed) {
+        points.push_back(PointPair(st, ed));
     }
 
     int size;

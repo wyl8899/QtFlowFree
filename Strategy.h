@@ -38,23 +38,49 @@ public:
         return QString("Strategy: [%1]").arg(list.join(", "));
     }
 
-    void startDraw(Point point) {
-        if (tryAtStart(point))
-            return;
-        if (tryAtMiddle(point))
-            return;
+    bool tryStartDraw(Point point) {
+        if (tryStartDrawingAtStart(point))
+            return true;
+        if (tryStartDrawingAtMiddle(point))
+            return true;
         // Not starting point nor occupied by existing pipes.
         // Fail.
+        return false;
+    }
+
+    bool isTemporarilyOccupied(Point point) {
+        if (isDrawing()) {
+            return currentPipe()->contains(point);
+        } else {
+            return false;
+        }
+    }
+
+    void startDraw(Point point) {
+        if (tryStartDraw(point)) {
+            paint();
+        }
+    }
+
+    inline bool shouldExtend(Point point) {
+        if (Board::isStart(point) && Board::getIndex(point) != current)
+            return false;
+        else
+            return true;
     }
 
     void extendDraw(Point point) {
-        Pipe* pipe = pipes[current];
-        pipe->extend(point);
+        if (shouldExtend(point)) {
+            currentPipe()->extend(point);
+            paint();
+        }
     }
 
     void finishDraw() {
-        Pipe* currentPipe = pipes[current];
-        std::vector<Point>& currentPoints = currentPipe->points();
+        if (!isDrawing())
+            return;
+        std::vector<Point>& currentPoints = currentPipe()->points();
+        currentPipe()->finish();
         for (auto point : currentPoints) {
             for (int i = 0; i < numOfColors(); ++i)
                 if (i != current) {
@@ -74,20 +100,29 @@ private:
     std::vector<Pipe*> pipes;
     int current;
 
+    bool isDrawing() {
+        return current != NoCurrentColor;
+    }
+
+    Pipe* currentPipe() {
+        assert(isDrawing());
+        return pipes[current];
+    }
+
     void startDrawAtStart(int color, Point point) {
         current = color;
         Pipe* &pipe = pipes[color];
         delete pipe;
         pipe = new Pipe(this, point, Board::getTheOther(color, point));
+        pipe->setParent(this);
     }
 
     void startDrawAtMiddle(int color, Point point) {
         current = color;
-        Pipe* pipe = pipes[color];
-        pipe->extend(point);
+        currentPipe()->start(point);
     }
 
-    bool tryAtStart(Point point) {
+    bool tryStartDrawingAtStart(Point point) {
         for (int i = 0; i < numOfColors(); ++i) {
             if (Board::isStart(point)) {
                 startDrawAtStart(Board::getIndex(point), point);
@@ -97,7 +132,7 @@ private:
         return false;
     }
 
-    bool tryAtMiddle(Point point) {
+    bool tryStartDrawingAtMiddle(Point point) {
         for (int i = 0; i < numOfColors(); ++i) {
             Pipe* pipe = pipes[i];
             if (pipe != nullptr && pipe->contains(point)) {

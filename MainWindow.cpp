@@ -1,22 +1,21 @@
 #include "MainWindow.h"
 #include "Scene.h"
-#include "QGraphicsView"
+#include "View.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-{
+#include <QGraphicsView>
+#include <QDebug>
+
+MainWindow::MainWindow(QWidget *parent): QMainWindow(parent) {
     resize(500, 500);
-    Scene* scene = new Scene(this);
-    QGraphicsView* view = new QGraphicsView(this);
+    scene = new Scene(this);
+    QGraphicsView* view = new View(this);
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setScene(scene->getScene());
     setCentralWidget(view);
-
     puzzle = nullptr;
 }
 
-MainWindow::~MainWindow()
-{
-
+MainWindow::~MainWindow() {
+    delete grid;
 }

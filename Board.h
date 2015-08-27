@@ -1,12 +1,16 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+#include <common.h>
 #include <Point.h>
 #include <GameConfig.h>
+#include <Itemlist.h>
+#include <Grid.h>
 
 #include <QObject>
 #include <QDebug>
 #include <QString>
+#include <QMargins>
 #include <algorithm>
 #include <vector>
 #include <cassert>
@@ -42,11 +46,12 @@ class Board : public QObject {
     Q_OBJECT
 public:
     Board(GameConfig config, QObject* parent) : QObject(parent) {
+        singleton = this;
         for (auto& i : config.points) {
             PointPair pair(i);
             points.push_back(pair);
         }
-        singleton = this;
+        paint();
     }
 
     ~Board() {
@@ -56,6 +61,43 @@ public:
     static Board* instance() {
         assert(singleton != nullptr);
         return singleton;
+    }
+
+    static int getIndex(Point point) {
+        return instance()->_getIndex(point);
+    }
+    static bool isStart(Point point) {
+        return instance()->_isStart(point);
+    }
+    static Point getTheOther(int index, Point point) {
+        return instance()->_getTheOther(index, point);
+    }
+
+private:
+    enum {
+        PointNotFound = -1,
+        Margins = 16
+    };
+
+    static Board* singleton;
+    ItemList* itemList;
+    std::vector<PointPair> points;
+
+    void paint() {
+        itemList = new ItemList(this);
+        for (auto& pair : points) {
+            paintPoint(pair.first);
+            paintPoint(pair.second);
+        }
+    }
+
+    void paintPoint(Point point) {
+        QRect rect = Grid::getGridRect(point);
+        QMargins margins = QMargins(Margins, Margins, Margins, Margins);
+        QRect rectShrinked = rect.marginsRemoved(margins);
+        auto circle = new QGraphicsEllipseItem(rectShrinked);
+        circle->setZValue(zValues::Circle);
+        itemList->addItem(circle);
     }
 
     int _getIndex(Point point) {
@@ -74,25 +116,6 @@ public:
     Point _getTheOther(int index, Point point) {
         return points[index].getTheOther(point);
     }
-
-    static int getIndex(Point point) {
-        return instance()->_getIndex(point);
-    }
-    static bool isStart(Point point) {
-        return instance()->_isStart(point);
-    }
-    static Point getTheOther(int index, Point point) {
-        return instance()->_getTheOther(index, point);
-    }
-
-private:
-    enum {
-        PointNotFound = -1
-    };
-
-    static Board* singleton;
-
-    std::vector<PointPair> points;
 };
 
 #endif // BOARD_H

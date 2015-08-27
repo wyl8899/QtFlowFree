@@ -1,11 +1,14 @@
 #ifndef PIPE_H
 #define PIPE_H
 
+#include "common.h"
 #include "Itemlist.h"
 #include "Point.h"
+#include "Grid.h"
 
 #include <QObject>
 #include <QString>
+#include <QPoint>
 #include <vector>
 
 class Strategy;
@@ -18,12 +21,32 @@ public:
         path.push_back(st);
         dest = ed;
         itemList = new ItemList(this);
+        state = Drawing;
         paint();
+    }
+
+    QPoint getCenter(Point point) {
+        return Grid::getGridRect(point).center();
+    }
+
+    void paintLine(QPoint st, QPoint ed) {
+        auto line = new QGraphicsLineItem(st.x(), st.y(), ed.x(), ed.y());
+        line->setZValue(zValues::PipeLine);
+        itemList->addItem(line);
+    }
+
+    void paintLines();
+
+    void paintBackgrounds() {
+        // TODO
     }
 
     void paint() {
         itemList->clear();
-        // TODO
+        paintLines();
+        if (state == NotDrawing) {
+            paintBackgrounds();
+        }
     }
 
     QString inspect() {
@@ -46,7 +69,16 @@ public:
         return *path.rbegin() == dest;
     }
 
+    bool isTemporarilyOccupied(Point point);
+
+    void start(Point point) {
+        assert(state == NotDrawing);
+        state = Drawing;
+        extend(point);
+    }
+
     void extend(Point point) {
+        assert(state == Drawing);
         if (contains(point)) {
             int index = getIndex(point);
             path.resize(index + 1);
@@ -56,13 +88,21 @@ public:
                 path.push_back(point);
             }
         }
+        paint();
     }
 
     void intercept(Point point) {
+        assert(state == NotDrawing);
         if (contains(point)) {
             int index = getIndex(point);
             path.resize(index);
         }
+        paint();
+    }
+
+    void finish() {
+        assert(state == Drawing);
+        state = NotDrawing;
     }
 
 private:
@@ -70,8 +110,14 @@ private:
         PointNotFound = -1
     };
 
+    enum State {
+        NotDrawing,
+        Drawing
+    };
+
     Point dest;
     std::vector<Point> path;
+    State state;
 
     Strategy* strategy;
 
@@ -87,3 +133,4 @@ private:
 };
 
 #endif // PIPE_H
+

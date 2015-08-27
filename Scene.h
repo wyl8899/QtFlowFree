@@ -3,6 +3,7 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsItem>
+#include <QDebug>
 #include <cassert>
 
 class Scene : QObject {
