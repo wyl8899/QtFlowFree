@@ -10,12 +10,33 @@
 class Grid: public QObject {
     Q_OBJECT
 public:
-    Grid(int _pixelSize, int _size) {
+    Grid(int _pixelSize, int _size, QObject* parent) : QObject(parent) {
+        singleton = this;
         pixelSize = _pixelSize;
         size = _size;
         init();
         paint();
     }
+
+    ~Grid() {
+        singleton = nullptr;
+    }
+
+    static Grid* instance() {
+        assert(singleton != nullptr);
+        return singleton;
+    }
+
+    static void locate(int x, int y) {
+        instance()->_locate(x, y);
+    }
+private:
+    static Grid* singleton;
+
+    std::vector<int> line;
+
+    int pixelSize, size;
+    ItemList* itemList;
 
     void init() {
         double gridSize = (double)pixelSize / size;
@@ -26,17 +47,14 @@ public:
 
     void paint() {
         itemList = new ItemList(this);
+        QGraphicsItem* line;
+        line = new QGraphicsLineItem(0, 0, pixelSize, pixelSize);
+        itemList->addItem(line);
     }
 
-    Point locate(int x, int y) {
+    Point _locate(int x, int y) {
         return Point(locate(x), locate(y));
     }
-
-private:
-    std::vector<int> line;
-
-    int pixelSize, size;
-    ItemList* itemList;
 
     int locate(int x) {
         assert(x >= 0);

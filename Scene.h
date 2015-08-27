@@ -9,16 +9,17 @@ class Scene : QObject {
     Q_OBJECT
 public:
     explicit Scene(QObject* parent = 0) : QObject(parent) {
-        _instance = this;
+        singleton = this;
+        scene = new QGraphicsScene(this);
     }
 
     ~Scene() {
-        _instance = nullptr;
+        singleton = nullptr;
     }
 
     static Scene* instance() {
-        assert(_instance != nullptr);
-        return _instance;
+        assert(singleton != nullptr);
+        return singleton;
     }
 
     static QGraphicsScene* getScene() {
@@ -33,7 +34,7 @@ public:
     }
 
 private:
-    static Scene* _instance;
+    static Scene* singleton;
     QGraphicsScene* scene;
 
     QGraphicsScene* _getScene() {

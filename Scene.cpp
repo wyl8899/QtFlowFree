@@ -1,3 +1,3 @@
 #include "Scene.h"
 
-Scene* Scene::_instance = nullptr;
+Scene* Scene::singleton = nullptr;
