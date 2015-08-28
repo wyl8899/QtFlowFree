@@ -1,52 +1,24 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include "Locator.h"
+
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 #include <QDebug>
 #include <cassert>
 
-class Scene : QObject {
+class Scene : public QObject, private LocatorRegister<Scene> {
     Q_OBJECT
 public:
-    explicit Scene(QObject* parent = 0) : QObject(parent) {
-        singleton = this;
-        scene = new QGraphicsScene(this);
-    }
+    explicit Scene(QObject* parent = 0);
+    ~Scene();
 
-    ~Scene() {
-        singleton = nullptr;
-    }
-
-    static Scene* instance() {
-        assert(singleton != nullptr);
-        return singleton;
-    }
-
-    static QGraphicsScene* getScene() {
-        return instance()->_getScene();
-    }
-
-    static void addItem(QGraphicsItem* item) {
-        instance()->_addItem(item);
-    }
-    static void removeItem(QGraphicsItem* item) {
-        instance()->_removeItem(item);
-    }
-
+    QGraphicsScene* getScene();
+    void addItem(QGraphicsItem* item);
+    void removeItem(QGraphicsItem* item);
 private:
-    static Scene* singleton;
     QGraphicsScene* scene;
-
-    QGraphicsScene* _getScene() {
-        return scene;
-    }
-    void _addItem(QGraphicsItem* item) {
-        scene->addItem(item);
-    }
-    void _removeItem(QGraphicsItem* item) {
-        scene->removeItem(item);
-    }
 };
 
 #endif // SCENE_H
