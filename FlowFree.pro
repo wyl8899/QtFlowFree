@@ -26,7 +26,8 @@ SOURCES +=\
     predefinedColor.cpp \
     Strategy.cpp \
     GameConfig.cpp \
-    ItemList.cpp
+    ItemList.cpp \
+    MouseDragCircle.cpp
 
 HEADERS  += MainWindow.h \
     Grid.h \
@@ -43,4 +44,5 @@ HEADERS  += MainWindow.h \
     paint_common.h \
     predefinedColor.h \
     Background.h \
-    ItemList.h
+    ItemList.h \
+    MouseDragCircle.h

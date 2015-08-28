@@ -31,14 +31,20 @@ namespace common {
         return color;
     }
 
+    QColor getIndexMouseDragCircleColor(int index) {
+        QColor color = getIndexColor(index);
+        color.setAlpha(100);
+        return color;
+    }
+
     QColor getColor(VisibleItemID item, int subIndex) {
         switch (item) {
         case Background: return QColor("black");
         case GridBgColor: return getIndexBgColor(subIndex);
-        case GridLine: return QColor("white");
+        case GridLine: return QColor("yellow").lighter();
         case Circle:
         case PipeLine: return getIndexColor(subIndex);
-        case MouseDragCircle: return QColor("#80FF0000");
+        case MouseDragCircle: return getIndexMouseDragCircleColor(subIndex);
         }
         return QColor(0, 0, 0);
     }

@@ -3,6 +3,7 @@
 
 #include "Grid.h"
 #include "Puzzle.h"
+#include "MouseDragCircle.h"
 
 #include <QGraphicsView>
 #include <QMouseEvent>
@@ -16,8 +17,10 @@ public:
     }
 
     void mousePressEvent(QMouseEvent* event) {
-        Point pos = Grid::locate(event->pos());
+        QPoint rawPos = event->pos();
+        Point pos = Grid::locate(rawPos);
         Puzzle::startDraw(pos);
+        MouseDragCircle::move(rawPos);
     }
 
     void mouseMoveEvent(QMouseEvent* event) {
@@ -26,11 +29,13 @@ public:
             return;
         Point pos = Grid::locate(rawPos);
         Puzzle::extendDraw(pos);
+        MouseDragCircle::move(rawPos);
     }
 
     void mouseReleaseEvent(QMouseEvent* event) {
         Q_UNUSED(event);
         Puzzle::finishDraw();
+        MouseDragCircle::hide();
     }
 };
 

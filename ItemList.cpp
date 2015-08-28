@@ -1,6 +1,8 @@
 #include "ItemList.h"
 
-ItemList::ItemList(QObject *parent) : QObject(parent) {}
+ItemList::ItemList(QObject *parent) : QObject(parent) {
+    list.clear();
+}
 
 ItemList::~ItemList() {
     clear();

@@ -1,5 +1,6 @@
 #include "Pipe.h"
 #include "Strategy.h"
+#include "MouseDragCircle.h"
 
 Pipe::Pipe(Strategy *_strategy, int _index, Point st, Point ed) {
     strategy = _strategy;
@@ -7,7 +8,8 @@ Pipe::Pipe(Strategy *_strategy, int _index, Point st, Point ed) {
     path.push_back(st);
     dest = ed;
     itemList = new ItemList(this);
-    state = Drawing;
+    state = NotDrawing;
+    start(st);
     paint();
 }
 
@@ -51,8 +53,6 @@ void Pipe::paintBackground(QRect rect){
     itemList->addItem(rectItem);
 }
 
-
-
 void Pipe::paintBackgrounds() {
     for (auto& point : path) {
         QRect rect = Grid::getGridRect(point);
@@ -94,6 +94,8 @@ bool Pipe::isTemporarilyOccupied(Point point) {
 void Pipe::start(Point point) {
     assert(state == NotDrawing);
     state = Drawing;
+    MouseDragCircle::setColor(common::getColor(common::VisibleItemID::MouseDragCircle, index));
+    MouseDragCircle::show();
     extend(point);
 }
 
