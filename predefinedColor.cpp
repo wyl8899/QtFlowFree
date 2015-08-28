@@ -25,7 +25,7 @@ namespace common {
         }
     }
 
-    QColor getIndexBgColor(int index) {
+    QColor getIndexGridBgColor(int index) {
         QColor color = getIndexColor(index);
         color.setAlpha(150);
         return color;
@@ -40,7 +40,7 @@ namespace common {
     QColor getColor(VisibleItemID item, int subIndex) {
         switch (item) {
         case Background: return QColor("black");
-        case GridBgColor: return getIndexBgColor(subIndex);
+        case GridBgColor: return getIndexGridBgColor(subIndex);
         case GridLine: return QColor("yellow").lighter();
         case Circle:
         case PipeLine: return getIndexColor(subIndex);

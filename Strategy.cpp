@@ -55,7 +55,7 @@ bool Strategy::shouldExtend(Point point) {
 }
 
 void Strategy::extendDraw(Point point) {
-    if (shouldExtend(point)) {
+    if (isDrawing() && shouldExtend(point)) {
         currentPipe()->extend(point);
         paint();
     }

@@ -10,7 +10,7 @@
 #include <QRect>
 #include <QPoint>
 
-class Grid: public QObject {
+class Grid: public QObject, private LocatorRegister<Grid> {
     Q_OBJECT
 public:
     Grid(int _pixelSize, int _size, QObject* parent = 0);

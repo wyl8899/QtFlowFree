@@ -13,6 +13,9 @@ public:
         status = Status::Hide;
     }
 
+    ~MouseDragCircle() {
+    }
+
     static MouseDragCircle* instance() {
         if (singleton == nullptr)
             singleton = new MouseDragCircle();

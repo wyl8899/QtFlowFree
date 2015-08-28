@@ -27,7 +27,8 @@ SOURCES +=\
     Strategy.cpp \
     GameConfig.cpp \
     ItemList.cpp \
-    MouseDragCircle.cpp
+    MouseDragCircle.cpp \
+    Locator.cpp
 
 HEADERS  += MainWindow.h \
     Grid.h \
@@ -45,4 +46,5 @@ HEADERS  += MainWindow.h \
     predefinedColor.h \
     Background.h \
     ItemList.h \
-    MouseDragCircle.h
+    MouseDragCircle.h \
+    Locator.h

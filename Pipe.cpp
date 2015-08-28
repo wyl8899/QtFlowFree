@@ -22,7 +22,7 @@ void Pipe::paintLine(QPoint st, QPoint ed) {
     const auto itemID = common::VisibleItemID::PipeLine;
     QColor color = common::getColor(itemID, index);
     QBrush brush(color);
-    qreal width = Grid::getGridSize() * common::PredefinedSize::PipeWidthOverGridSize;
+    qreal width = Locator<Grid>()->getGridSize() * common::PredefinedSize::PipeWidthOverGridSize;
     QPen pen(brush, width, Qt::SolidLine, Qt::RoundCap);
     line->setPen(pen);
     line->setZValue(itemID);
@@ -94,7 +94,8 @@ bool Pipe::isTemporarilyOccupied(Point point) {
 void Pipe::start(Point point) {
     assert(state == NotDrawing);
     state = Drawing;
-    MouseDragCircle::setColor(common::getColor(common::VisibleItemID::MouseDragCircle, index));
+    QColor color = common::getColor(common::VisibleItemID::MouseDragCircle, index);
+    MouseDragCircle::setColor(color);
     MouseDragCircle::show();
     extend(point);
 }

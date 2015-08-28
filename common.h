@@ -2,6 +2,7 @@
 #define COMMON_H
 
 #include <QObject>
+#include <Locator.h>
 
 namespace common {
     enum VisibleItemID {
