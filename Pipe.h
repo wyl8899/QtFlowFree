@@ -20,11 +20,12 @@ public:
     QPoint getCenter(Point point);
     void paintLine(QPoint st, QPoint ed);
     void paintLines();
+    void paintBackground(QRect rect);
     void paintBackgrounds();
     void paint();
     QString inspect();
 
-    std::vector<Point>& points() {
+    const std::vector<Point>& points() {
         return path;
     }
 

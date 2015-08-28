@@ -79,7 +79,7 @@ public:
     void finishDraw() {
         if (!isDrawing())
             return;
-        std::vector<Point>& currentPoints = currentPipe()->points();
+        const std::vector<Point>& currentPoints = currentPipe()->points();
         currentPipe()->finish();
         for (auto point : currentPoints) {
             for (int i = 0; i < numOfColors(); ++i)
@@ -90,6 +90,7 @@ public:
                 }
         }
         current = NoCurrentColor;
+        paint();
     }
 
 private:

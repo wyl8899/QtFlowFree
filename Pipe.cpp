@@ -40,8 +40,23 @@ void Pipe::paintLines() {
     }
 }
 
+void Pipe::paintBackground(QRect rect){
+    auto rectItem = new QGraphicsRectItem(rect);
+    auto itemID = common::VisibleItemID::GridBgColor;
+    QColor color = common::getColor(itemID, index);
+    rectItem->setPen(Qt::NoPen);
+    rectItem->setBrush(QBrush(color));
+    rectItem->setZValue(itemID);
+    itemList->addItem(rectItem);
+}
+
+
+
 void Pipe::paintBackgrounds() {
-    // TODO
+    for (auto& point : path) {
+        QRect rect = Grid::getGridRect(point);
+        paintBackground(rect);
+    }
 }
 
 void Pipe::paint() {
