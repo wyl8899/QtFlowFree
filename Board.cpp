@@ -26,7 +26,7 @@ void Board::paint() {
 
 void Board::paintPoint(Point point, int index) {
     QRect rect = Grid::getGridRect(point);
-    qreal margin = Grid::getGridSize() * 0.1;
+    qreal margin = Grid::getGridSize() * (1 - common::PredefinedSize::CircleSizeOverGridSize);
     QMargins margins = QMargins(margin, margin, margin, margin);
     QRect rectShrinked = rect.marginsRemoved(margins);
     auto circle = new QGraphicsEllipseItem(rectShrinked);

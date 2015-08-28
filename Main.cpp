@@ -15,8 +15,11 @@ int main(int argc, char *argv[]) {
     config.size = 5;
     window.startGame(config);
 
-    config.add(1, 0, 1, 2);
-    config.add(0, 1, 2, 1);
+    config.add(4, 0, 4, 2);
+    config.add(3, 3, 4, 4);
+    config.add(0, 4, 3, 4);
+    config.add(1, 1, 0, 3);
+    config.add(1, 2, 3, 2);
     Puzzle puzzle(config);
 
     /*

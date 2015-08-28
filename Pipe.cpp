@@ -18,11 +18,12 @@ QPoint Pipe::getCenter(Point point) {
 void Pipe::paintLine(QPoint st, QPoint ed) {
     auto line = new QGraphicsLineItem(st.x(), st.y(), ed.x(), ed.y());
     const auto itemID = common::VisibleItemID::PipeLine;
-    line->setZValue(itemID);
     QColor color = common::getColor(itemID, index);
     QBrush brush(color);
-    QPen pen(brush, Grid::getGridSize() * 0.3, Qt::SolidLine, Qt::RoundCap);
+    qreal width = Grid::getGridSize() * common::PredefinedSize::PipeWidthOverGridSize;
+    QPen pen(brush, width, Qt::SolidLine, Qt::RoundCap);
     line->setPen(pen);
+    line->setZValue(itemID);
     itemList->addItem(line);
 }
 
