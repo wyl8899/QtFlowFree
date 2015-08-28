@@ -95,8 +95,8 @@ void Pipe::start(Point point) {
     assert(state == NotDrawing);
     state = Drawing;
     QColor color = common::getColor(common::VisibleItemID::MouseDragCircle, index);
-    MouseDragCircle::setColor(color);
-    MouseDragCircle::show();
+    Locator<MouseDragCircle>()->setColor(color);
+    Locator<MouseDragCircle>()->show();
     extend(point);
 }
 

@@ -1,6 +1,6 @@
 #include "Locator.h"
 
-namespace serviceLocater {
+namespace instanceLocater {
 
 LocatorRegistry* LocatorRegistry::singleton = nullptr;
 

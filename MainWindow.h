@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Grid.h"
 #include "Background.h"
+#include "MouseDragCircle.h"
 
 #include <QMainWindow>
 
@@ -23,6 +24,7 @@ private:
     Grid* grid;
     Scene* scene;
     Background* background;
+    MouseDragCircle* mouseDragCircle;
 };
 
 #endif // MAINWINDOW_H

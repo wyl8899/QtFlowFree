@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <cassert>
 
-namespace serviceLocater {
+namespace instanceLocater {
 
 class LocatorRegistry {
 public:
@@ -32,16 +32,16 @@ class LocatorRegister {
 public:
     LocatorRegister() {
         qDebug() << "LocatorRegister: " << typeid(T).name();
-        serviceLocater::LocatorRegistry::instance()->__register(std::type_index(typeid(T)), this);
+        instanceLocater::LocatorRegistry::instance()->__register(std::type_index(typeid(T)), this);
     }
     ~LocatorRegister() {
-        serviceLocater::LocatorRegistry::instance()->__unregister(std::type_index(typeid(T)));
+        instanceLocater::LocatorRegistry::instance()->__unregister(std::type_index(typeid(T)));
     }
 };
 
 template <class T>
 T* Locator() {
-    void* value = serviceLocater::LocatorRegistry::instance()->__get(std::type_index(typeid(T)));
+    void* value = instanceLocater::LocatorRegistry::instance()->__get(std::type_index(typeid(T)));
     return static_cast<T*>(value);
 }
 

@@ -20,7 +20,7 @@ public:
         QPoint rawPos = event->pos();
         Point pos = Locator<Grid>()->locate(rawPos);
         Locator<Puzzle>()->startDraw(pos);
-        MouseDragCircle::move(rawPos);
+        Locator<MouseDragCircle>()->move(rawPos);
     }
 
     void mouseMoveEvent(QMouseEvent* event) {
@@ -29,13 +29,13 @@ public:
             return;
         Point pos = Locator<Grid>()->locate(rawPos);
         Locator<Puzzle>()->extendDraw(pos);
-        MouseDragCircle::move(rawPos);
+        Locator<MouseDragCircle>()->move(rawPos);
     }
 
     void mouseReleaseEvent(QMouseEvent* event) {
         Q_UNUSED(event);
         Locator<Puzzle>()->finishDraw();
-        MouseDragCircle::hide();
+        Locator<MouseDragCircle>()->hide();
     }
 };
 
