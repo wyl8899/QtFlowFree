@@ -1,9 +1,6 @@
 #include "Board.h"
 
-Board* Board::singleton = nullptr;
-
 Board::Board(GameConfig config, QObject *parent) : QObject(parent) {
-    singleton = this;
     for (auto& i : config.points) {
         PointPair pair(i);
         points.push_back(pair);
@@ -12,7 +9,6 @@ Board::Board(GameConfig config, QObject *parent) : QObject(parent) {
 }
 
 Board::~Board() {
-    singleton = nullptr;
 }
 
 void Board::paint() {
@@ -25,8 +21,8 @@ void Board::paint() {
 }
 
 void Board::paintPoint(Point point, int index) {
-    QRect rect = Grid::getGridRect(point);
-    qreal margin = Grid::getGridSize() * (1 - common::PredefinedSize::CircleSizeOverGridSize);
+    QRect rect = Locator<Grid>()->getGridRect(point);
+    qreal margin = Locator<Grid>()->getGridSize() * (1 - common::PredefinedSize::CircleSizeOverGridSize);
     QMargins margins = QMargins(margin, margin, margin, margin);
     QRect rectShrinked = rect.marginsRemoved(margins);
     auto circle = new QGraphicsEllipseItem(rectShrinked);
@@ -38,7 +34,7 @@ void Board::paintPoint(Point point, int index) {
     itemList->addItem(circle);
 }
 
-int Board::_getIndex(Point point) {
+int Board::getIndex(Point point) {
     for (size_t i = 0; i < points.size(); ++i) {
         PointPair& p = points[i];
         if (p.contains(point))
@@ -47,10 +43,10 @@ int Board::_getIndex(Point point) {
     return PointNotFound;
 }
 
-bool Board::_isStart(Point point) {
+bool Board::isStart(Point point) {
     return getIndex(point) != PointNotFound;
 }
 
-Point Board::_getTheOther(int index, Point point) {
+Point Board::getTheOther(int index, Point point) {
     return points[index].getTheOther(point);
 }

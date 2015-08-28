@@ -1,9 +1,6 @@
 #include "Grid.h"
 
-Grid* Grid::singleton = nullptr;
-
 Grid::Grid(int _pixelSize, int _size, QObject *parent) : QObject(parent) {
-    singleton = this;
     pixelSize = _pixelSize;
     size = _size;
     init();
@@ -11,7 +8,6 @@ Grid::Grid(int _pixelSize, int _size, QObject *parent) : QObject(parent) {
 }
 
 Grid::~Grid() {
-    singleton = nullptr;
 }
 
 void Grid::init() {
@@ -30,7 +26,7 @@ void Grid::paintLine(int x1, int y1, int x2, int y2) {
     itemList->addItem(line);
 }
 
-qreal Grid::_getGridSize() {
+qreal Grid::getGridSize() {
     return gridSize;
 }
 
@@ -43,15 +39,15 @@ void Grid::paint() {
     }
 }
 
-bool Grid::_isInside(QPoint point) {
+bool Grid::isInside(QPoint point) {
     return isInside(point.x()) && isInside(point.y());
 }
 
-Point Grid::_locate(QPoint point) {
+Point Grid::locate(QPoint point) {
     return Point(locate(point.x()), locate(point.y()));
 }
 
-QRect Grid::_getGridRect(Point point) {
+QRect Grid::getGridRect(Point point) {
     int x = point.x, y = point.y;
     return QRect(QPoint(line[x], line[y]), QPoint(line[x+1], line[y+1]));
 }

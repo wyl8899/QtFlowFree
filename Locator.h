@@ -31,6 +31,7 @@ template <class T>
 class LocatorRegister {
 public:
     LocatorRegister() {
+        qDebug() << "LocatorRegister: " << typeid(T).name();
         serviceLocater::LocatorRegistry::instance()->__register(std::type_index(typeid(T)), this);
     }
     ~LocatorRegister() {

@@ -28,9 +28,9 @@ struct PointPair {
     }
     inline Point getTheOther(Point point) {
         if (first == point)
-        return second;
+            return second;
         if (second == point)
-        return first;
+            return first;
         assert(false);
     }
 
@@ -39,43 +39,28 @@ struct PointPair {
     }
 };
 
-class Board : public QObject {
+class Board : public QObject, private LocatorRegister<Board> {
     Q_OBJECT
 public:
     Board(GameConfig config, QObject* parent);
 
     ~Board();
 
-    static Board* instance() {
-        assert(singleton != nullptr);
-        return singleton;
-    }
-
-    static int getIndex(Point point) {
-        return instance()->_getIndex(point);
-    }
-    static bool isStart(Point point) {
-        return instance()->_isStart(point);
-    }
-    static Point getTheOther(int index, Point point) {
-        return instance()->_getTheOther(index, point);
-    }
+    int getIndex(Point point);
+    bool isStart(Point point);
+    Point getTheOther(int index, Point point);
 
 private:
     enum {
         PointNotFound = -1,
     };
 
-    static Board* singleton;
     ItemList* itemList;
     std::vector<PointPair> points;
 
     void paint();
     void paintPoint(Point point, int index);
 
-    int _getIndex(Point point);
-    bool _isStart(Point point);
-    Point _getTheOther(int index, Point point);
 };
 
 #endif // BOARD_H

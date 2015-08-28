@@ -14,15 +14,18 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent) {
     view->setScene(scene->getScene());
     setCentralWidget(view);
     puzzle = nullptr;
+    grid = nullptr;
+    background = nullptr;
 }
 
 MainWindow::~MainWindow() {
-    delete grid;
     delete background;
+    delete puzzle;
+    delete grid;
 }
 
 void MainWindow::startGame(GameConfig config) {
-    puzzle = new Puzzle(config, this);
     grid = new Grid(this->width(), config.size, this);
+    puzzle = new Puzzle(config, this);
     background = new Background(this);
 }

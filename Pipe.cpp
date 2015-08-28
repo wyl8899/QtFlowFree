@@ -14,7 +14,7 @@ Pipe::Pipe(Strategy *_strategy, int _index, Point st, Point ed) {
 }
 
 QPoint Pipe::getCenter(Point point) {
-    return Grid::getGridRect(point).center();
+    return Locator<Grid>()->getGridRect(point).center();
 }
 
 void Pipe::paintLine(QPoint st, QPoint ed) {
@@ -55,7 +55,7 @@ void Pipe::paintBackground(QRect rect){
 
 void Pipe::paintBackgrounds() {
     for (auto& point : path) {
-        QRect rect = Grid::getGridRect(point);
+        QRect rect = Locator<Grid>()->getGridRect(point);
         paintBackground(rect);
     }
 }

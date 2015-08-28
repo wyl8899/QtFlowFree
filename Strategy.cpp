@@ -48,7 +48,7 @@ void Strategy::startDraw(Point point) {
 }
 
 bool Strategy::shouldExtend(Point point) {
-    if (Board::isStart(point) && Board::getIndex(point) != current)
+    if (Locator<Board>()->isStart(point) && Locator<Board>()->getIndex(point) != current)
         return false;
     else
         return true;
@@ -82,7 +82,7 @@ void Strategy::startDrawAtStart(int color, Point point) {
     current = color;
     Pipe* &pipe = pipes[color];
     delete pipe;
-    pipe = new Pipe(this, color, point, Board::getTheOther(color, point));
+    pipe = new Pipe(this, color, point, Locator<Board>()->getTheOther(color, point));
     pipe->setParent(this);
 }
 
@@ -93,8 +93,8 @@ void Strategy::startDrawAtMiddle(int color, Point point) {
 
 bool Strategy::tryStartDrawingAtStart(Point point) {
     for (int i = 0; i < numOfColors(); ++i) {
-        if (Board::isStart(point)) {
-            startDrawAtStart(Board::getIndex(point), point);
+        if (Locator<Board>()->isStart(point)) {
+            startDrawAtStart(Locator<Board>()->getIndex(point), point);
             return true;
         }
     }

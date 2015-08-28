@@ -18,16 +18,16 @@ public:
 
     void mousePressEvent(QMouseEvent* event) {
         QPoint rawPos = event->pos();
-        Point pos = Grid::locate(rawPos);
+        Point pos = Locator<Grid>()->locate(rawPos);
         Puzzle::startDraw(pos);
         MouseDragCircle::move(rawPos);
     }
 
     void mouseMoveEvent(QMouseEvent* event) {
         QPoint rawPos = event->pos();
-        if (!Grid::isInside(rawPos))
+        if (!Locator<Grid>()->isInside(rawPos))
             return;
-        Point pos = Grid::locate(rawPos);
+        Point pos = Locator<Grid>()->locate(rawPos);
         Puzzle::extendDraw(pos);
         MouseDragCircle::move(rawPos);
     }
