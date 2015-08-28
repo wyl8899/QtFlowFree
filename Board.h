@@ -1,11 +1,10 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include <common.h>
-#include <Point.h>
-#include <GameConfig.h>
-#include <Itemlist.h>
-#include <Grid.h>
+#include "paint_common.h"
+#include "Point.h"
+#include "GameConfig.h"
+#include "Grid.h"
 
 #include <QObject>
 #include <QDebug>
@@ -76,7 +75,6 @@ public:
 private:
     enum {
         PointNotFound = -1,
-        Margins = 16
     };
 
     static Board* singleton;
@@ -85,18 +83,24 @@ private:
 
     void paint() {
         itemList = new ItemList(this);
-        for (auto& pair : points) {
-            paintPoint(pair.first);
-            paintPoint(pair.second);
+        for (size_t i = 0; i < points.size(); ++i) {
+            auto& pair = points[i];
+            paintPoint(pair.first, i);
+            paintPoint(pair.second, i);
         }
     }
 
-    void paintPoint(Point point) {
+    void paintPoint(Point point, int index) {
         QRect rect = Grid::getGridRect(point);
-        QMargins margins = QMargins(Margins, Margins, Margins, Margins);
+        qreal margin = Grid::getGridSize() * 0.1;
+        QMargins margins = QMargins(margin, margin, margin, margin);
         QRect rectShrinked = rect.marginsRemoved(margins);
         auto circle = new QGraphicsEllipseItem(rectShrinked);
-        circle->setZValue(zValues::Circle);
+        auto itemID = common::VisibleItemID::Circle;
+        QColor color = common::getColor(itemID, index);
+        circle->setZValue(itemID);
+        circle->setPen(Qt::NoPen);
+        circle->setBrush(QBrush(color));
         itemList->addItem(circle);
     }
 

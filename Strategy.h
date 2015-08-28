@@ -113,7 +113,7 @@ private:
         current = color;
         Pipe* &pipe = pipes[color];
         delete pipe;
-        pipe = new Pipe(this, point, Board::getTheOther(color, point));
+        pipe = new Pipe(this, color, point, Board::getTheOther(color, point));
         pipe->setParent(this);
     }
 

@@ -21,12 +21,13 @@ SOURCES +=\
     test.cpp \
     Grid.cpp \
     Puzzle.cpp \
-    Pipe.cpp
+    Pipe.cpp \
+    Background.cpp \
+    predefinedColor.cpp
 
 HEADERS  += MainWindow.h \
     Grid.h \
     Point.h \
-    Itemlist.h \
     Scene.h \
     Pipe.h \
     Strategy.h \
@@ -35,4 +36,8 @@ HEADERS  += MainWindow.h \
     Puzzle.h \
     test.h \
     View.h \
-    common.h
+    common.h \
+    paint_common.h \
+    predefinedColor.h \
+    Background.h \
+    ItemList.h

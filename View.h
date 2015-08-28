@@ -21,7 +21,10 @@ public:
     }
 
     void mouseMoveEvent(QMouseEvent* event) {
-        Point pos = Grid::locate(event->pos());
+        QPoint rawPos = event->pos();
+        if (!Grid::isInside(rawPos))
+            return;
+        Point pos = Grid::locate(rawPos);
         Puzzle::extendDraw(pos);
     }
 
