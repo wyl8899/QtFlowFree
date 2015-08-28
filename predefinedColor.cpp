@@ -26,7 +26,7 @@ namespace common {
 
     QColor getIndexBgColor(int index) {
         QColor color = getIndexColor(index);
-        color.setAlpha(100);
+        color.setAlpha(150);
         return color;
     }
 

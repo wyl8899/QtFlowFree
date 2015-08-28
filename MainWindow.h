@@ -17,11 +17,7 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void startGame(GameConfig config) {
-        puzzle = new Puzzle(config, this);
-        grid = new Grid(this->width(), config.size, this);
-        background = new Background(this);
-    }
+    void startGame(GameConfig config);
 private:
     Puzzle* puzzle;
     Grid* grid;

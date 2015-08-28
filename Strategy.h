@@ -12,86 +12,21 @@ class Strategy : public QObject
 {
     Q_OBJECT
 public:
-    explicit Strategy(int numOfColors, QObject *parent = 0) : QObject(parent) {
-        pipes.resize(numOfColors);
-        current = NoCurrentColor;
-    }
+    explicit Strategy(int numOfColors, QObject *parent = 0);
 
-    void paint() {
-        for (auto &i : pipes) {
-            if (i != nullptr)
-                i->paint();
-        }
-    }
+    void paint();
 
     inline int numOfColors() {
         return pipes.size();
     }
 
-    QString inspect() {
-        QStringList list;
-        for (int i = 0; i < numOfColors(); ++i) {
-            Pipe* pipe = pipes[i];
-            QString pipeStr = pipe == nullptr ? QString("No pipe") : pipe->inspect();
-            list << QString("[%1%2]%3").arg(i).arg(i==current?"*":"").arg(pipeStr);
-        }
-        return QString("Strategy: [%1]").arg(list.join(", "));
-    }
+    QString inspect();
 
-    bool tryStartDraw(Point point) {
-        if (tryStartDrawingAtStart(point))
-            return true;
-        if (tryStartDrawingAtMiddle(point))
-            return true;
-        // Not starting point nor occupied by existing pipes.
-        // Fail.
-        return false;
-    }
+    bool isTemporarilyOccupied(Point point);
 
-    bool isTemporarilyOccupied(Point point) {
-        if (isDrawing()) {
-            return currentPipe()->contains(point);
-        } else {
-            return false;
-        }
-    }
-
-    void startDraw(Point point) {
-        if (tryStartDraw(point)) {
-            paint();
-        }
-    }
-
-    inline bool shouldExtend(Point point) {
-        if (Board::isStart(point) && Board::getIndex(point) != current)
-            return false;
-        else
-            return true;
-    }
-
-    void extendDraw(Point point) {
-        if (shouldExtend(point)) {
-            currentPipe()->extend(point);
-            paint();
-        }
-    }
-
-    void finishDraw() {
-        if (!isDrawing())
-            return;
-        const std::vector<Point>& currentPoints = currentPipe()->points();
-        currentPipe()->finish();
-        for (auto point : currentPoints) {
-            for (int i = 0; i < numOfColors(); ++i)
-                if (i != current) {
-                    Pipe* pipe = pipes[i];
-                    if (pipe != nullptr)
-                        pipe->intercept(point);
-                }
-        }
-        current = NoCurrentColor;
-        paint();
-    }
+    void startDraw(Point point);
+    void extendDraw(Point point);
+    void finishDraw();
 
 private:
     enum {
@@ -101,48 +36,21 @@ private:
     std::vector<Pipe*> pipes;
     int current;
 
-    bool isDrawing() {
+    inline bool isDrawing() {
         return current != NoCurrentColor;
     }
 
-    Pipe* currentPipe() {
+    inline Pipe* currentPipe() {
         assert(isDrawing());
         return pipes[current];
     }
 
-    void startDrawAtStart(int color, Point point) {
-        current = color;
-        Pipe* &pipe = pipes[color];
-        delete pipe;
-        pipe = new Pipe(this, color, point, Board::getTheOther(color, point));
-        pipe->setParent(this);
-    }
-
-    void startDrawAtMiddle(int color, Point point) {
-        current = color;
-        currentPipe()->start(point);
-    }
-
-    bool tryStartDrawingAtStart(Point point) {
-        for (int i = 0; i < numOfColors(); ++i) {
-            if (Board::isStart(point)) {
-                startDrawAtStart(Board::getIndex(point), point);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    bool tryStartDrawingAtMiddle(Point point) {
-        for (int i = 0; i < numOfColors(); ++i) {
-            Pipe* pipe = pipes[i];
-            if (pipe != nullptr && pipe->contains(point)) {
-                startDrawAtMiddle(i, point);
-                return true;
-            }
-        }
-        return false;
-    }
+    bool tryStartDraw(Point point);
+    bool shouldExtend(Point point);
+    void startDrawAtStart(int color, Point point);
+    void startDrawAtMiddle(int color, Point point);
+    bool tryStartDrawingAtStart(Point point);
+    bool tryStartDrawingAtMiddle(Point point);
 };
 
 #endif // STRATEGY_H

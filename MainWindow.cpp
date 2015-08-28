@@ -20,3 +20,9 @@ MainWindow::~MainWindow() {
     delete grid;
     delete background;
 }
+
+void MainWindow::startGame(GameConfig config) {
+    puzzle = new Puzzle(config, this);
+    grid = new Grid(this->width(), config.size, this);
+    background = new Background(this);
+}

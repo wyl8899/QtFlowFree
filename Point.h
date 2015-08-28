@@ -10,19 +10,17 @@ struct Point {
     Point() {}
     Point(int x, int y) : x(x), y(y) {}
 
-    bool operator==(const Point &rhs) {
+    inline bool operator==(const Point &rhs) {
         return x == rhs.x && y == rhs.y;
     }
 
-    bool isAdjacentTo(const Point &p) {
+    inline bool isAdjacentTo(const Point &p) {
         return std::abs(x - p.x) + std::abs(y - p.y) == 1;
     }
 
-    QString inspect() {
+    inline QString inspect() {
         return QString("(%1, %2)").arg(x).arg(y);
     }
 };
-
-QDebug operator<<(QDebug debug, const Point& point);
 
 #endif // POINT_H

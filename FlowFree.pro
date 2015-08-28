@@ -23,7 +23,10 @@ SOURCES +=\
     Puzzle.cpp \
     Pipe.cpp \
     Background.cpp \
-    predefinedColor.cpp
+    predefinedColor.cpp \
+    Strategy.cpp \
+    GameConfig.cpp \
+    ItemList.cpp
 
 HEADERS  += MainWindow.h \
     Grid.h \

@@ -34,28 +34,17 @@ struct PointPair {
         assert(false);
     }
 
-    QString inspect() {
+    inline QString inspect() {
         return QString("[") + first.inspect() + ", " + second.inspect() + "]";
     }
 };
 
-QDebug operator<<(QDebug debug, const PointPair& pair);
-
 class Board : public QObject {
     Q_OBJECT
 public:
-    Board(GameConfig config, QObject* parent) : QObject(parent) {
-        singleton = this;
-        for (auto& i : config.points) {
-            PointPair pair(i);
-            points.push_back(pair);
-        }
-        paint();
-    }
+    Board(GameConfig config, QObject* parent);
 
-    ~Board() {
-        singleton = nullptr;
-    }
+    ~Board();
 
     static Board* instance() {
         assert(singleton != nullptr);
@@ -81,45 +70,12 @@ private:
     ItemList* itemList;
     std::vector<PointPair> points;
 
-    void paint() {
-        itemList = new ItemList(this);
-        for (size_t i = 0; i < points.size(); ++i) {
-            auto& pair = points[i];
-            paintPoint(pair.first, i);
-            paintPoint(pair.second, i);
-        }
-    }
+    void paint();
+    void paintPoint(Point point, int index);
 
-    void paintPoint(Point point, int index) {
-        QRect rect = Grid::getGridRect(point);
-        qreal margin = Grid::getGridSize() * 0.1;
-        QMargins margins = QMargins(margin, margin, margin, margin);
-        QRect rectShrinked = rect.marginsRemoved(margins);
-        auto circle = new QGraphicsEllipseItem(rectShrinked);
-        auto itemID = common::VisibleItemID::Circle;
-        QColor color = common::getColor(itemID, index);
-        circle->setZValue(itemID);
-        circle->setPen(Qt::NoPen);
-        circle->setBrush(QBrush(color));
-        itemList->addItem(circle);
-    }
-
-    int _getIndex(Point point) {
-        for (size_t i = 0; i < points.size(); ++i) {
-            PointPair& p = points[i];
-            if (p.contains(point))
-                return i;
-        }
-        return PointNotFound;
-    }
-
-    bool _isStart(Point point) {
-        return getIndex(point) != PointNotFound;
-    }
-
-    Point _getTheOther(int index, Point point) {
-        return points[index].getTheOther(point);
-    }
+    int _getIndex(Point point);
+    bool _isStart(Point point);
+    Point _getTheOther(int index, Point point);
 };
 
 #endif // BOARD_H
