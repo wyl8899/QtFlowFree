@@ -6,17 +6,18 @@
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent) {
-    resize(500, 500);
     scene = new Scene(this);
-    QGraphicsView* view = new View(this);
-    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    view->setScene(scene->getScene());
-    setCentralWidget(view);
     puzzle = nullptr;
     grid = nullptr;
     background = nullptr;
     mouseDragCircle = nullptr;
+
+    ui.setupUi(this);
+    view = ui.graphicsView;
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setScene(scene->getScene());
+    view->setSceneRect(view->rect());
 }
 
 MainWindow::~MainWindow() {
@@ -27,7 +28,8 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::startGame(GameConfig config) {
-    grid = new Grid(this->width(), config.size, this);
+    auto gridSize = std::min(view->width(), view->height());
+    grid = new Grid(gridSize, config.size, this);
     puzzle = new Puzzle(config, this);
     background = new Background(this);
     mouseDragCircle = new MouseDragCircle(this);

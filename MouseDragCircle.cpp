@@ -12,7 +12,7 @@ void MouseDragCircle::setColor(QColor color) {
     this->color = color;
 }
 
-void MouseDragCircle::show(QPoint point) {
+void MouseDragCircle::show(QPointF point) {
     status = Status::Show;
     paint(point);
 }
@@ -21,7 +21,7 @@ void MouseDragCircle::show() {
     status = Status::Show;
 }
 
-void MouseDragCircle::move(QPoint point) {
+void MouseDragCircle::move(QPointF point) {
     if (status == Status::Show)
         paint(point);
 }
@@ -31,7 +31,7 @@ void MouseDragCircle::hide() {
     itemList->clear();
 }
 
-void MouseDragCircle::paint(QPoint point) {
+void MouseDragCircle::paint(QPointF point) {
     itemList->clear();
     qreal diameter = common::PredefinedSize::MouseDragCircleSize;
     qreal radius = diameter * 0.5;

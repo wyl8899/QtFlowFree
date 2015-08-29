@@ -13,8 +13,8 @@ public:
     ~MouseDragCircle();
 
     void setColor(QColor color);
-    void show(QPoint point);
-    void move(QPoint point);
+    void show(QPointF point);
+    void move(QPointF point);
     void show();
     void hide();
 private:
@@ -27,7 +27,7 @@ private:
     QColor color;
     Status status;
 
-    void paint(QPoint point);
+    void paint(QPointF point);
 };
 
 #endif // MOUSEDRAGCIRCLE_H

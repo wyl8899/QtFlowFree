@@ -16,9 +16,9 @@ public:
     Grid(int _pixelSize, int _size, QObject* parent = 0);
     ~Grid();
 
-    Point locate(QPoint point);
+    Point locate(QPointF point);
     QRect getGridRect(Point point);
-    bool isInside(QPoint point);
+    bool isInside(QPointF point);
     qreal getGridSize();
 private:
 
@@ -31,8 +31,8 @@ private:
     void init();
     void paintLine(int x1, int y1, int x2, int y2);
     void paint();
-    bool isInside(int x);
-    int locate(int x);
+    bool isInside(qreal x);
+    int locate(qreal x);
 };
 
 #endif // GRID_H

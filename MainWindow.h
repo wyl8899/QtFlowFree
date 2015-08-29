@@ -8,6 +8,8 @@
 #include "Background.h"
 #include "MouseDragCircle.h"
 
+#include "ui_MainWindow.h"
+
 #include <QMainWindow>
 
 class MainWindow : public QMainWindow
@@ -25,6 +27,9 @@ private:
     Scene* scene;
     Background* background;
     MouseDragCircle* mouseDragCircle;
+    View* view;
+
+    Ui_MainWindow ui;
 };
 
 #endif // MAINWINDOW_H

@@ -13,30 +13,11 @@ class QGraphicsScene;
 class View : public QGraphicsView {
     Q_OBJECT
 public:
-    explicit View(QWidget* parent = 0) : QGraphicsView(parent) {
-    }
+    explicit View(QWidget* parent = 0);
 
-    void mousePressEvent(QMouseEvent* event) {
-        QPoint rawPos = event->pos();
-        Point pos = Locator<Grid>()->locate(rawPos);
-        Locator<Puzzle>()->startDraw(pos);
-        Locator<MouseDragCircle>()->move(rawPos);
-    }
-
-    void mouseMoveEvent(QMouseEvent* event) {
-        QPoint rawPos = event->pos();
-        if (!Locator<Grid>()->isInside(rawPos))
-            return;
-        Point pos = Locator<Grid>()->locate(rawPos);
-        Locator<Puzzle>()->extendDraw(pos);
-        Locator<MouseDragCircle>()->move(rawPos);
-    }
-
-    void mouseReleaseEvent(QMouseEvent* event) {
-        Q_UNUSED(event);
-        Locator<Puzzle>()->finishDraw();
-        Locator<MouseDragCircle>()->hide();
-    }
+    void mousePressEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
 };
 
 #endif // VIEW_H

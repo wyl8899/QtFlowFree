@@ -39,11 +39,11 @@ void Grid::paint() {
     }
 }
 
-bool Grid::isInside(QPoint point) {
+bool Grid::isInside(QPointF point) {
     return isInside(point.x()) && isInside(point.y());
 }
 
-Point Grid::locate(QPoint point) {
+Point Grid::locate(QPointF point) {
     return Point(locate(point.x()), locate(point.y()));
 }
 
@@ -52,11 +52,11 @@ QRect Grid::getGridRect(Point point) {
     return QRect(QPoint(line[x], line[y]), QPoint(line[x+1], line[y+1]));
 }
 
-bool Grid::isInside(int x) {
+bool Grid::isInside(qreal x) {
     return x >= 0 && x <= pixelSize;
 }
 
-int Grid::locate(int x) {
+int Grid::locate(qreal x) {
     assert(isInside(x));
     for (int i = 0; i < size; ++i) {
         if (x <= line[i + 1])

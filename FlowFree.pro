@@ -28,7 +28,8 @@ SOURCES +=\
     GameConfig.cpp \
     ItemList.cpp \
     MouseDragCircle.cpp \
-    Locator.cpp
+    Locator.cpp \
+    View.cpp
 
 HEADERS  += MainWindow.h \
     Grid.h \
@@ -48,3 +49,6 @@ HEADERS  += MainWindow.h \
     ItemList.h \
     MouseDragCircle.h \
     Locator.h
+
+FORMS += \
+    MainWindow.ui
