@@ -8,6 +8,10 @@
 #include <QBrush>
 #include <QPen>
 #include <QColor>
+#include <QPoint>
+#include <QPointF>
+#include <QRect>
+#include <QRectF>
 #include <QGraphicsItem>
 #include <QGraphicsLineItem>
 #include <QGraphicsEllipseItem>

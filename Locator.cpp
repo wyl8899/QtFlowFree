@@ -21,7 +21,7 @@ void LocatorRegistry::__register(LocatorRegistry::Key key, void *value) {
 
 void LocatorRegistry::__unregister(LocatorRegistry::Key key) {
     assert(hasRegistered(key));
-    registry[key] = nullptr;
+    registry.erase(key);
 }
 
 void *LocatorRegistry::__get(LocatorRegistry::Key key) {

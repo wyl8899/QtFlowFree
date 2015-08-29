@@ -9,8 +9,20 @@
 #include <QDebug>
 #include <QRect>
 #include <QPoint>
+#include <QGraphicsSceneMouseEvent>
 
-class Grid: public QObject, private LocatorRegister<Grid> {
+class GridMouseEventHandler : public QGraphicsRectItem {
+public:
+    GridMouseEventHandler(const QRect& rect) : QGraphicsRectItem(rect) {
+    }
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
+};
+
+class Grid : public QObject, private LocatorRegister<Grid> {
     Q_OBJECT
 public:
     Grid(int _pixelSize, int _size, QObject* parent = 0);

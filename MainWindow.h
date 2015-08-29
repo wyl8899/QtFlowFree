@@ -7,8 +7,8 @@
 #include "Grid.h"
 #include "Background.h"
 #include "MouseDragCircle.h"
-
-#include "ui_MainWindow.h"
+#include "View.h"
+#include "GameWindow.h"
 
 #include <QMainWindow>
 
@@ -22,14 +22,9 @@ public:
 
     void startGame(GameConfig config);
 private:
-    Puzzle* puzzle;
-    Grid* grid;
     Scene* scene;
     Background* background;
-    MouseDragCircle* mouseDragCircle;
     View* view;
-
-    Ui_MainWindow ui;
 };
 
 #endif // MAINWINDOW_H

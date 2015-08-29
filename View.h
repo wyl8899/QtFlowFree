@@ -15,10 +15,7 @@ class View : public QGraphicsView, private LocatorRegister<View> {
     Q_OBJECT
 public:
     explicit View(QWidget* parent = 0);
-
-    void mousePressEvent(QMouseEvent* event);
-    void mouseMoveEvent(QMouseEvent* event);
-    void mouseReleaseEvent(QMouseEvent* event);
+protected:
     void wheelEvent(QWheelEvent* event);
 };
 

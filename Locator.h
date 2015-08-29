@@ -31,10 +31,11 @@ template <class T>
 class LocatorRegister {
 public:
     LocatorRegister() {
-        qDebug() << "LocatorRegister: " << typeid(T).name();
+        qDebug() << "LocatorRegister: reg" << typeid(T).name();
         instanceLocater::LocatorRegistry::instance()->__register(std::type_index(typeid(T)), this);
     }
     ~LocatorRegister() {
+        qDebug() << "LocatorRegister: unreg" << typeid(T).name();
         instanceLocater::LocatorRegistry::instance()->__unregister(std::type_index(typeid(T)));
     }
 };

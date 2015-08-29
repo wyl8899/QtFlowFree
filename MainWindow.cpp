@@ -1,35 +1,38 @@
 #include "MainWindow.h"
 #include "Scene.h"
 #include "View.h"
+#include "WindowSelector.h"
+#include "MainMenuWindow.h"
 
 #include <QGraphicsView>
 #include <QDebug>
+#include <QPushButton>
+#include <QGraphicsProxyWidget>
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent) {
-    scene = new Scene(this);
-    puzzle = nullptr;
-    grid = nullptr;
-    background = nullptr;
-    mouseDragCircle = nullptr;
+    setFixedWidth(common::PredefinedSize::SceneWidth);
+    setFixedHeight(common::PredefinedSize::SceneHeight);
 
-    ui.setupUi(this);
-    view = ui.view;
+    scene = new Scene(this);
+
+    view = new View(this);
+    view->setGeometry(this->geometry());
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setScene(scene->getScene());
+
+    background = new Background(this);
+
+    auto mainMenuWindow  = new MainMenuWindow();
+    WindowSelector::select(mainMenuWindow);
 }
 
 MainWindow::~MainWindow() {
     delete background;
-    delete puzzle;
-    delete grid;
-    delete mouseDragCircle;
+    delete view;
 }
 
 void MainWindow::startGame(GameConfig config) {
-    auto gridSize = std::min(view->width(), view->height());
-    grid = new Grid(gridSize, config.size, this);
-    puzzle = new Puzzle(config, this);
-    background = new Background(this);
-    mouseDragCircle = new MouseDragCircle(this);
+    auto gameWindow = new GameWindow(config);
+    WindowSelector::select(gameWindow);
 }
