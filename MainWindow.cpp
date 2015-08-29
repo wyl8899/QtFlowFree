@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent) {
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setScene(scene->getScene());
+    view->setSceneRect(view->rect());
 
     background = new Background(this);
 

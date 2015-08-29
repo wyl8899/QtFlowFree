@@ -13,7 +13,7 @@ GameWindow::GameWindow(GameConfig config, QObject *parent) : QObject(parent) {
     auto backText = new ClickableText();
     backText->setHtml(R"(<p style="font-family:Arial;font-size:27px;color:white">Back</p>)");
     backText->setZValue(common::VisibleItemID::Text);
-    backText->setX(common::PredefinedSize::SceneWidth * 0.025);
+    backText->setX(11);
     backText->setY(20);
     connect(backText, &ClickableText::released, [](){WindowSelector::select(new MainMenuWindow);});
     itemList->addItem(backText);

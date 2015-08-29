@@ -2,23 +2,23 @@
 #include <QColor>
 
 namespace common {
+    const char* predefinedColors[NumOfPredefinedColors] = {
+        "red",
+        "yellow",
+        "blue",
+        "green",
+        "orange",
+        "lightskyblue",
+        "pink",
+        "purple",
+        "royalblue",
+        "plum",
+        "darkviolet"
+    };
+
     QColor getIndexColor(int index) {
-        static const char* colors[] = {
-            "red",
-            "yellow",
-            "blue",
-            "green",
-            "orange",
-            "lightskyblue",
-            "pink",
-            "purple",
-            "royalblue",
-            "plum",
-            "darkviolet"
-        };
-        static const int colorsSize = sizeof(colors) / sizeof(colors[0]);
-        if (index < colorsSize) {
-            return QColor(QString(colors[index]));
+        if (index < NumOfPredefinedColors) {
+            return QColor(QString(predefinedColors[index]));
         } else {
             // Run out of colors, use grayscale
             return QColor(index, index, index);
