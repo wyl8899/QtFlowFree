@@ -1,6 +1,5 @@
 #include "View.h"
 
-
 View::View(QWidget *parent) : QGraphicsView(parent) {
 }
 
@@ -26,4 +25,9 @@ void View::mouseReleaseEvent(QMouseEvent *event) {
     Q_UNUSED(event);
     Locator<Puzzle>()->finishDraw();
     Locator<MouseDragCircle>()->hide();
+}
+
+void View::wheelEvent(QWheelEvent *event) {
+    Q_UNUSED(event);
+    // Do Nothing
 }
