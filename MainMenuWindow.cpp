@@ -7,6 +7,7 @@ MainMenuWindow::MainMenuWindow(QObject *parent) : QObject(parent) {
     flowText->setHtml(R"(<p style="font-size:90px;font-family:Arial"><span style="color:red">f</span><span style="color:green">l</span><span style="color:blue">o</span><span style="color:yellow">w</span></p>)");
     Scene::setAlignHCenter(flowText);
     flowText->setY(common::PredefinedSize::SceneHeight * 0.13);
+    flowText->setZValue(common::VisibleItemID::Text);
     itemList->addItem(flowText);
 
     auto playText = new ClickableText();
@@ -14,6 +15,7 @@ MainMenuWindow::MainMenuWindow(QObject *parent) : QObject(parent) {
     Scene::setAlignHCenter(playText);
     playText->setY(common::PredefinedSize::SceneHeight * 0.33);
     connect(playText, SIGNAL(released()), this, SLOT(play()));
+    playText->setZValue(common::VisibleItemID::Text);
     itemList->addItem(playText);
 }
 

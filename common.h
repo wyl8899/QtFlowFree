@@ -7,6 +7,7 @@
 namespace common {
     enum VisibleItemID {
         Background,
+        Text,
         GridBgColor,
         GridLine,
         Circle,

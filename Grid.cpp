@@ -22,10 +22,9 @@ void Grid::init() {
 void Grid::paintLine(int x1, int y1, int x2, int y2) {
     auto line = new QGraphicsLineItem(x1, y1, x2, y2);
     auto itemID = common::VisibleItemID::GridLine;
-    line->setZValue(itemID);
     QColor color = common::getColor(itemID);
     line->setPen(QPen(color));
-    itemList->addItem(line);
+    line->setParentItem(gridRect);
 }
 
 qreal Grid::getGridSize() {
@@ -34,15 +33,19 @@ qreal Grid::getGridSize() {
 
 void Grid::paint() {
     itemList = new ItemList(this);
+
+    gridRect = new GridRect(QRect(0, 0, pixelSize, pixelSize));
+    gridRect->setZValue(common::VisibleItemID::GridLine);
+    gridRect->setFlag(QGraphicsItem::ItemHasNoContents);
+    Scene::setAlignHCenter(gridRect);
+    gridRect->setY(common::PredefinedSize::SceneHeight * 0.1);
+    itemList->addItem(gridRect);
+
     for (int i = 0; i <= size; ++i) {
         int pos = line[i];
         paintLine(0, pos, pixelSize, pos);
         paintLine(pos, 0, pos, pixelSize);
     }
-    auto rect = new GridMouseEventHandler(QRect(0, 0, pixelSize, pixelSize));
-    rect->setPen(Qt::NoPen);
-    rect->setBrush(Qt::NoBrush);
-    itemList->addItem(rect);
 }
 
 bool Grid::isInside(QPointF point) {
@@ -53,9 +56,13 @@ Point Grid::locate(QPointF point) {
     return Point(locate(point.x()), locate(point.y()));
 }
 
-QRect Grid::getGridRect(Point point) {
+QRectF Grid::getGridRect(Point point) {
     int x = point.x, y = point.y;
-    return QRect(QPoint(line[x], line[y]), QPoint(line[x+1], line[y+1]));
+    auto localLeftTop = QPoint(line[x], line[y]);
+    auto localRightBottom = QPoint(line[x+1], line[y+1]);
+    auto sceneLeftTop = gridRect->mapToScene(localLeftTop);
+    auto sceneRightBottom = gridRect->mapToScene(localRightBottom);
+    return QRectF(sceneLeftTop, sceneRightBottom);
 }
 
 bool Grid::isInside(qreal x) {
@@ -73,25 +80,27 @@ int Grid::locate(qreal x) {
 }
 
 
-void GridMouseEventHandler::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-    QPointF rawPos = event->pos();
-    if (Locator<Grid>()->isInside(rawPos)) {
-        Point pos = Locator<Grid>()->locate(rawPos);
-        Locator<Puzzle>()->startDraw(pos);
-        Locator<MouseDragCircle>()->move(rawPos);
+void GridRect::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    QPointF pos = event->pos();
+    if (Locator<Grid>()->isInside(pos)) {
+        Point point = Locator<Grid>()->locate(pos);
+        Locator<Puzzle>()->startDraw(point);
+        QPointF scenePos = mapToScene(pos);
+        Locator<MouseDragCircle>()->move(scenePos);
     }
 }
 
-void GridMouseEventHandler::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-    QPointF rawPos = event->pos();
-    if (Locator<Grid>()->isInside(rawPos)) {
-        Point pos = Locator<Grid>()->locate(rawPos);
-        Locator<Puzzle>()->extendDraw(pos);
-        Locator<MouseDragCircle>()->move(rawPos);
+void GridRect::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+    QPointF pos = event->pos();
+    if (Locator<Grid>()->isInside(pos)) {
+        Point point = Locator<Grid>()->locate(pos);
+        Locator<Puzzle>()->extendDraw(point);
+        QPointF scenePos = mapToScene(pos);
+        Locator<MouseDragCircle>()->move(scenePos);
     }
 }
 
-void GridMouseEventHandler::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+void GridRect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
     Q_UNUSED(event);
     Locator<Puzzle>()->finishDraw();
     Locator<MouseDragCircle>()->hide();

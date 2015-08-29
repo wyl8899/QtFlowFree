@@ -9,7 +9,6 @@
 #include <QObject>
 #include <QDebug>
 #include <QString>
-#include <QMargins>
 #include <algorithm>
 #include <vector>
 #include <cassert>

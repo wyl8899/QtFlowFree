@@ -1,4 +1,5 @@
 #include "Board.h"
+#include <QMarginsF>
 
 Board::Board(GameConfig config, QObject *parent) : QObject(parent) {
     for (auto& i : config.points) {
@@ -21,10 +22,10 @@ void Board::paint() {
 }
 
 void Board::paintPoint(Point point, int index) {
-    QRect rect = Locator<Grid>()->getGridRect(point);
+    QRectF rect = Locator<Grid>()->getGridRect(point);
     qreal margin = Locator<Grid>()->getGridSize() * (1 - common::PredefinedSize::CircleSizeOverGridSize);
-    QMargins margins = QMargins(margin, margin, margin, margin);
-    QRect rectShrinked = rect.marginsRemoved(margins);
+    auto margins = QMarginsF(margin, margin, margin, margin);
+    QRectF rectShrinked = rect.marginsRemoved(margins);
     auto circle = new QGraphicsEllipseItem(rectShrinked);
     auto itemID = common::VisibleItemID::Circle;
     QColor color = common::getColor(itemID, index);

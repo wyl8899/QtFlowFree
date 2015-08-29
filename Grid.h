@@ -11,9 +11,9 @@
 #include <QPoint>
 #include <QGraphicsSceneMouseEvent>
 
-class GridMouseEventHandler : public QGraphicsRectItem {
+class GridRect : public QGraphicsRectItem {
 public:
-    GridMouseEventHandler(const QRect& rect) : QGraphicsRectItem(rect) {
+    GridRect(const QRect& rect) : QGraphicsRectItem(rect) {
     }
 
 protected:
@@ -29,7 +29,7 @@ public:
     ~Grid();
 
     Point locate(QPointF point);
-    QRect getGridRect(Point point);
+    QRectF getGridRect(Point point);
     bool isInside(QPointF point);
     qreal getGridSize();
 private:
@@ -39,6 +39,7 @@ private:
     int pixelSize, size;
     qreal gridSize;
     ItemList* itemList;
+    GridRect* gridRect;
 
     void init();
     void paintLine(int x1, int y1, int x2, int y2);

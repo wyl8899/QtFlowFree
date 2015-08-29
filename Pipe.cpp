@@ -13,11 +13,11 @@ Pipe::Pipe(Strategy *_strategy, int _index, Point st, Point ed) {
     paint();
 }
 
-QPoint Pipe::getCenter(Point point) {
+QPointF Pipe::getCenter(Point point) {
     return Locator<Grid>()->getGridRect(point).center();
 }
 
-void Pipe::paintLine(QPoint st, QPoint ed) {
+void Pipe::paintLine(QPointF st, QPointF ed) {
     auto line = new QGraphicsLineItem(st.x(), st.y(), ed.x(), ed.y());
     const auto itemID = common::VisibleItemID::PipeLine;
     QColor color = common::getColor(itemID, index);
@@ -30,20 +30,20 @@ void Pipe::paintLine(QPoint st, QPoint ed) {
 }
 
 void Pipe::paintLines() {
-    std::vector<QPoint> centers;
+    std::vector<QPointF> centers;
     for (auto& point : path) {
         if (isTemporarilyOccupied(point))
             break;
         centers.push_back(getCenter(point));
     }
     for (size_t i = 1; i < centers.size(); ++i) {
-        QPoint& st = centers[i - 1];
-        QPoint& ed = centers[i];
+        QPointF& st = centers[i - 1];
+        QPointF& ed = centers[i];
         paintLine(st, ed);
     }
 }
 
-void Pipe::paintBackground(QRect rect){
+void Pipe::paintBackground(QRectF rect){
     auto rectItem = new QGraphicsRectItem(rect);
     auto itemID = common::VisibleItemID::GridBgColor;
     QColor color = common::getColor(itemID, index);
@@ -55,7 +55,7 @@ void Pipe::paintBackground(QRect rect){
 
 void Pipe::paintBackgrounds() {
     for (auto& point : path) {
-        QRect rect = Locator<Grid>()->getGridRect(point);
+        QRectF rect = Locator<Grid>()->getGridRect(point);
         paintBackground(rect);
     }
 }

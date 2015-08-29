@@ -17,10 +17,10 @@ class Pipe : public QObject {
 public:
     Pipe(Strategy* _strategy, int _index, Point st, Point ed);
 
-    QPoint getCenter(Point point);
-    void paintLine(QPoint st, QPoint ed);
+    QPointF getCenter(Point point);
+    void paintLine(QPointF st, QPointF ed);
     void paintLines();
-    void paintBackground(QRect rect);
+    void paintBackground(QRectF rect);
     void paintBackgrounds();
     void paint();
     QString inspect();

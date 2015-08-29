@@ -14,8 +14,7 @@ class GameWindow : public QObject, public FlowFreeWindowBase, private LocatorReg
     Q_OBJECT
 public:
     explicit GameWindow(GameConfig config, QObject* parent = 0) : QObject(parent) {
-        auto view = Locator<View>();
-        auto gridSize = std::min(view->width(), view->height());
+        auto gridSize = common::PredefinedSize::SceneWidth * 0.95;
         grid = new Grid(gridSize, config.size, this);
         puzzle = new Puzzle(config, this);
         mouseDragCircle = new MouseDragCircle(this);

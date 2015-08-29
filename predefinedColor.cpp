@@ -40,6 +40,7 @@ namespace common {
     QColor getColor(VisibleItemID item, int subIndex) {
         switch (item) {
         case Background: return QColor("black");
+        case Text: break;
         case GridBgColor: return getIndexGridBgColor(subIndex);
         case GridLine: return QColor("yellow").lighter();
         case Circle:
