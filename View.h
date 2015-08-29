@@ -1,6 +1,7 @@
 #ifndef VIEW_H
 #define VIEW_H
 
+#include "common.h"
 #include "Grid.h"
 #include "Puzzle.h"
 #include "MouseDragCircle.h"
@@ -10,7 +11,7 @@
 
 class QGraphicsScene;
 
-class View : public QGraphicsView {
+class View : public QGraphicsView, private LocatorRegister<View> {
     Q_OBJECT
 public:
     explicit View(QWidget* parent = 0);

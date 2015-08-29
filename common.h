@@ -15,7 +15,6 @@ namespace common {
     };
 
     namespace PredefinedSize {
-        const int SceneSize = 500;
         const qreal PipeWidthOverGridSize = 0.35;
         const qreal CircleSizeOverGridSize = 0.85;
         const int MouseDragCircleSize = 156;

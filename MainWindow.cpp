@@ -13,11 +13,10 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent) {
     mouseDragCircle = nullptr;
 
     ui.setupUi(this);
-    view = ui.graphicsView;
+    view = ui.view;
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setScene(scene->getScene());
-    view->setSceneRect(view->rect());
 }
 
 MainWindow::~MainWindow() {

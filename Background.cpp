@@ -1,4 +1,5 @@
 #include "Background.h"
+#include "View.h"
 
 Background::Background(QObject *parent) : QObject(parent) {
     paint();
@@ -6,8 +7,8 @@ Background::Background(QObject *parent) : QObject(parent) {
 
 void Background::paint() {
     auto itemList = new ItemList(this);
-    int size = common::PredefinedSize::SceneSize;
-    auto rect = new QGraphicsRectItem(0, 0, size, size);
+    auto viewRect = Locator<View>()->rect();
+    auto rect = new QGraphicsRectItem(viewRect);
     auto itemID = common::VisibleItemID::Background;
     rect->setZValue(itemID);
     QColor color = common::getColor(itemID);

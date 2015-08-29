@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     window.show();
 
     GameConfig config;
-    config.size = 5;
+    config.size = 7;
     config.add(4, 0, 4, 2);
     config.add(3, 3, 4, 4);
     config.add(0, 4, 3, 4);
