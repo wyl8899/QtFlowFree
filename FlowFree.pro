@@ -31,7 +31,9 @@ SOURCES +=\
     Locator.cpp \
     View.cpp \
     WindowSelector.cpp \
-    MainMenuWindow.cpp
+    MainMenuWindow.cpp \
+    GameWindow.cpp \
+    ClickableText.cpp
 
 HEADERS  += MainWindow.h \
     Grid.h \
@@ -54,6 +56,7 @@ HEADERS  += MainWindow.h \
     FlowFreeWindowBase.h \
     GameWindow.h \
     MainMenuWindow.h \
-    WindowSelector.h
+    WindowSelector.h \
+    ClickableText.h
 
 FORMS +=

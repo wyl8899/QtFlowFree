@@ -1,4 +1,5 @@
 #include "MainMenuWindow.h"
+#include "ClickableText.h"
 
 MainMenuWindow::MainMenuWindow(QObject *parent) : QObject(parent) {
     itemList = new ItemList(this);

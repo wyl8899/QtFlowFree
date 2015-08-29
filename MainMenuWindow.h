@@ -15,22 +15,10 @@
 #include <QTextDocument>
 #include <QTextOption>
 
-class ClickableText : public QGraphicsTextItem {
-    Q_OBJECT
-protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent* event) {
-        Q_UNUSED(event);
-    }
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
-        if (this->contains(event->pos()))
-            emit released();
-    }
-signals:
-    void released();
-};
 
 class MainMenuWindow : public QObject, public FlowFreeWindowBase {
     Q_OBJECT
+
 public:
     explicit MainMenuWindow(QObject* parent = 0);
 
