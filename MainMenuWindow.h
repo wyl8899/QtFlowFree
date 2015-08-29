@@ -12,6 +12,8 @@
 #include <QGraphicsProxyWidget>
 #include <QGraphicsTextItem>
 #include <QDebug>
+#include <QTextDocument>
+#include <QTextOption>
 
 class ClickableText : public QGraphicsTextItem {
     Q_OBJECT
@@ -30,16 +32,7 @@ signals:
 class MainMenuWindow : public QObject, public FlowFreeWindowBase {
     Q_OBJECT
 public:
-    explicit MainMenuWindow(QObject* parent = 0) : QObject(parent) {
-        itemList = new ItemList(this);
-
-        playText = new ClickableText();
-        playText->setPlainText("Play");
-        playText->setDefaultTextColor("white");
-        connect(playText, SIGNAL(released()), this, SLOT(play()));
-
-        itemList->addItem(playText);
-    }
+    explicit MainMenuWindow(QObject* parent = 0);
 
     Mode mode() {
         return common::MainMenuWindow;
@@ -47,23 +40,9 @@ public:
 
 private:
     ItemList* itemList;
-    ClickableText* playText;
 
 public slots:
-    void play() {
-        GameConfig config;
-        config.size = 5;
-        config.add(4, 0, 4, 2);
-        config.add(3, 3, 4, 4);
-        config.add(0, 4, 3, 4);
-        config.add(1, 1, 0, 3);
-        config.add(1, 2, 3, 2);
-
-        auto gameWindow = new GameWindow(config);
-
-        // Warning: will delete this MainMenuWindow instance
-        WindowSelector::select(gameWindow);
-    }
+    void play();
 };
 
 #endif // MAINMENUWINDOW_H

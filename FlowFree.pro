@@ -30,7 +30,8 @@ SOURCES +=\
     MouseDragCircle.cpp \
     Locator.cpp \
     View.cpp \
-    WindowSelector.cpp
+    WindowSelector.cpp \
+    MainMenuWindow.cpp
 
 HEADERS  += MainWindow.h \
     Grid.h \

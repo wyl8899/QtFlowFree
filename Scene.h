@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include "Locator.h"
+#include "common.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsItem>
@@ -17,6 +18,11 @@ public:
     QGraphicsScene* getScene();
     void addItem(QGraphicsItem* item);
     void removeItem(QGraphicsItem* item);
+
+    static void setAlignHCenter(QGraphicsItem *item) {
+        auto width = item->boundingRect().width();
+        item->setX((common::PredefinedSize::SceneWidth - width) * 0.5);
+    }
 private:
     QGraphicsScene* scene;
 };
