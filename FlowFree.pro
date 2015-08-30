@@ -8,6 +8,8 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+QT		 += multimedia
+
 TARGET = FlowFree
 TEMPLATE = app
 CONFIG += c++11
@@ -33,7 +35,8 @@ SOURCES +=\
     WindowSelector.cpp \
     MainMenuWindow.cpp \
     GameWindow.cpp \
-    ClickableText.cpp
+    ClickableText.cpp \
+    builtinLevels.cpp
 
 HEADERS  += MainWindow.h \
     Grid.h \
@@ -57,6 +60,10 @@ HEADERS  += MainWindow.h \
     GameWindow.h \
     MainMenuWindow.h \
     WindowSelector.h \
-    ClickableText.h
+    ClickableText.h \
+    builtinLevels.h
 
 FORMS +=
+
+RESOURCES += \
+    resource.qrc

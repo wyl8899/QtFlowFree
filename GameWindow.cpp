@@ -1,26 +1,75 @@
 #include "GameWindow.h"
 #include "MainMenuWindow.h"
 #include "WindowSelector.h"
+#include "builtinLevels.h"
 
-GameWindow::GameWindow(GameConfig config, QObject *parent) : QObject(parent) {
-    auto gridSize = common::PredefinedSize::SceneWidth * 0.95;
+GameWindow::GameWindow(int levelID, QObject *parent) : QObject(parent) {
+    auto config = builtinLevels::getBuiltinLevel(levelID);
+
+    auto gridSize = common::predefinedSize::SceneWidth * 0.95;
     grid = new Grid(gridSize, config.size, this);
     puzzle = new Puzzle(config, this);
     mouseDragCircle = new MouseDragCircle(this);
 
     itemList = new ItemList(this);
 
+    const int textHMargin = 4;
+
     auto backText = new ClickableText();
     backText->setHtml(R"(<p style="font-family:Arial;font-size:27px;color:white">Back</p>)");
     backText->setZValue(common::VisibleItemID::Text);
-    backText->setX(11);
+    backText->setX(textHMargin);
     backText->setY(20);
-    connect(backText, &ClickableText::released, [](){WindowSelector::select(new MainMenuWindow);});
+    connect(backText, &ClickableText::released, [](){WindowSelector::show(new MainMenuWindow);});
     itemList->addItem(backText);
+
+    const int bottomTextY = common::predefinedSize::SceneHeight - 100;
+
+    auto restartText = new ClickableText();
+    restartText->setHtml(R"(<p style="font-family:Arial;font-size:27px;color:white">Restart</p>)");
+    restartText->setZValue(common::VisibleItemID::Text);
+    restartText->setY(bottomTextY);
+    Scene::setAlignHCenter(restartText);
+    connect(restartText, &ClickableText::released, [this, levelID](){
+        this->newGame(levelID);
+    });
+    itemList->addItem(restartText);
+
+    int prevLevelID = levelID - 1;
+    if (prevLevelID >= 0) {
+        auto prevText = new ClickableText();
+        prevText->setHtml(R"(<p style="font-family:Arial;font-size:27px;color:white">Prev Level</p>)");
+        prevText->setZValue(common::VisibleItemID::Text);
+        prevText->setY(bottomTextY);
+        prevText->setX(textHMargin);
+        connect(prevText, &ClickableText::released, [this, prevLevelID](){
+            this->newGame(prevLevelID);
+        });
+        itemList->addItem(prevText);
+    }
+
+    int nextLevelID = levelID + 1;
+    if (nextLevelID < builtinLevels::NumOfBuiltinLevels) {
+        auto nextText = new ClickableText();
+        nextText->setHtml(R"(<p style="font-family:Arial;font-size:27px;color:white">Next Level</p>)");
+        nextText->setZValue(common::VisibleItemID::Text);
+        nextText->setY(bottomTextY);
+        int textWidth = nextText->document()->idealWidth();
+        nextText->setX(common::predefinedSize::SceneWidth - textWidth - textHMargin);
+        connect(nextText, &ClickableText::released, [this, nextLevelID](){
+            this->newGame(nextLevelID);
+        });
+        itemList->addItem(nextText);
+    }
 }
 
 GameWindow::~GameWindow(){
     delete mouseDragCircle;
     delete puzzle;
     delete grid;
+}
+
+void GameWindow::newGame(int levelID) {
+    WindowSelector::kill(); // Ensure singleton classes destruct first
+    WindowSelector::show(new GameWindow(levelID));
 }

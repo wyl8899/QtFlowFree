@@ -3,12 +3,12 @@
 
 #include <Point.h>
 
+#include <QTextStream>
 #include <vector>
-#include <fstream>
 
 struct GameConfig {
     GameConfig();
-    GameConfig(const char* fileName);
+    GameConfig(QTextStream& stream);
 
     inline int numOfColors() {
         return points.size();

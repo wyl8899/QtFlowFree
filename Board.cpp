@@ -2,6 +2,7 @@
 #include <QMarginsF>
 
 Board::Board(GameConfig config, QObject *parent) : QObject(parent) {
+    size = config.size;
     for (auto& i : config.points) {
         PointPair pair(i);
         points.push_back(pair);
@@ -23,7 +24,7 @@ void Board::paint() {
 
 void Board::paintPoint(Point point, int index) {
     QRectF rect = Locator<Grid>()->getGridRect(point);
-    qreal margin = Locator<Grid>()->getGridSize() * (1 - common::PredefinedSize::CircleSizeOverGridSize);
+    qreal margin = Locator<Grid>()->getGridSize() * (1 - common::predefinedSize::CircleSizeOverGridSize);
     auto margins = QMarginsF(margin, margin, margin, margin);
     QRectF rectShrinked = rect.marginsRemoved(margins);
     auto circle = new QGraphicsEllipseItem(rectShrinked);
@@ -50,4 +51,8 @@ bool Board::isStart(Point point) {
 
 Point Board::getTheOther(int index, Point point) {
     return points[index].getTheOther(point);
+}
+
+int Board::getSize() {
+    return size;
 }

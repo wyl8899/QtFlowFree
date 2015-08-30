@@ -32,6 +32,7 @@ public:
     QRectF getGridRect(Point point);
     bool isInside(QPointF point);
     qreal getGridSize();
+    GridRect* getWholeGridRect();
 private:
 
     std::vector<int> line;

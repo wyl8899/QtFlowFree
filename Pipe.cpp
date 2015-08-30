@@ -2,6 +2,8 @@
 #include "Strategy.h"
 #include "MouseDragCircle.h"
 
+#include <QSound>
+
 Pipe::Pipe(Strategy *_strategy, int _index, Point st, Point ed) {
     strategy = _strategy;
     index = _index;
@@ -22,7 +24,7 @@ void Pipe::paintLine(QPointF st, QPointF ed) {
     const auto itemID = common::VisibleItemID::PipeLine;
     QColor color = common::getColor(itemID, index);
     QBrush brush(color);
-    qreal width = Locator<Grid>()->getGridSize() * common::PredefinedSize::PipeWidthOverGridSize;
+    qreal width = Locator<Grid>()->getGridSize() * common::predefinedSize::PipeWidthOverGridSize;
     QPen pen(brush, width, Qt::SolidLine, Qt::RoundCap);
     line->setPen(pen);
     line->setZValue(itemID);
@@ -119,6 +121,9 @@ void Pipe::extend(Point point) {
 void Pipe::intercept(Point point) {
     assert(state == NotDrawing);
     if (contains(point)) {
+        if (isConnected()) {
+            QSound::play(":/Sounds/Sounds/Broken.wav");
+        }
         int index = getIndex(point);
         path.resize(index);
     }
@@ -128,6 +133,9 @@ void Pipe::intercept(Point point) {
 void Pipe::finish() {
     assert(state == Drawing);
     state = NotDrawing;
+    if (isConnected()) {
+        QSound::play(":/Sounds/Sounds/Flow.wav");
+    }
 }
 
 int Pipe::getIndex(Point point) {

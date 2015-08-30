@@ -51,6 +51,12 @@ private:
     void startDrawAtMiddle(int color, Point point);
     bool tryStartDrawingAtStart(Point point);
     bool tryStartDrawingAtMiddle(Point point);
+
+    void checkWinningConditions();
+    bool isFulfilled();
+    void notifyHalfwayDone();
+    void notifyWin();
+    void drawNotifyRect(QString message);
 };
 
 #endif // STRATEGY_H

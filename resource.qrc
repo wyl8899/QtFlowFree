@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/Levels">
+        <file>Levels/5a.txt</file>
+        <file>Levels/5b.txt</file>
+        <file>Levels/6a.txt</file>
+        <file>Levels/6b.txt</file>
+        <file>Levels/7a.txt</file>
+        <file>Levels/7b.txt</file>
+        <file>Levels/halfwayDone.txt</file>
+    </qresource>
+    <qresource prefix="/Sounds">
+        <file>Sounds/Broken.wav</file>
+        <file>Sounds/Flow.wav</file>
+    </qresource>
+</RCC>

@@ -31,6 +31,10 @@ qreal Grid::getGridSize() {
     return gridSize;
 }
 
+GridRect *Grid::getWholeGridRect() {
+    return gridRect;
+}
+
 void Grid::paint() {
     itemList = new ItemList(this);
 
@@ -38,7 +42,7 @@ void Grid::paint() {
     gridRect->setZValue(common::VisibleItemID::GridLine);
     gridRect->setFlag(QGraphicsItem::ItemHasNoContents);
     Scene::setAlignHCenter(gridRect);
-    gridRect->setY(common::PredefinedSize::SceneHeight * 0.1);
+    gridRect->setY(common::predefinedSize::SceneHeight * 0.1);
     itemList->addItem(gridRect);
 
     for (int i = 0; i <= size; ++i) {

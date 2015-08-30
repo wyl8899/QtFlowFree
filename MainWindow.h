@@ -19,8 +19,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
-    void startGame(GameConfig config);
 private:
     Scene* scene;
     Background* background;

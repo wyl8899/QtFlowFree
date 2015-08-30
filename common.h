@@ -12,10 +12,12 @@ namespace common {
         GridLine,
         Circle,
         PipeLine,
-        MouseDragCircle
+        MouseDragCircle,
+        DialogRect,
+        DialogText
     };
 
-    namespace PredefinedSize {
+    namespace predefinedSize {
         const int SceneWidth = 500;
         const int SceneHeight = 650;
         const qreal PipeWidthOverGridSize = 0.35;

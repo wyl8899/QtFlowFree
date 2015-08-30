@@ -10,8 +10,8 @@
 #include <QGraphicsProxyWidget>
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent) {
-    setFixedWidth(common::PredefinedSize::SceneWidth);
-    setFixedHeight(common::PredefinedSize::SceneHeight);
+    setFixedWidth(common::predefinedSize::SceneWidth);
+    setFixedHeight(common::predefinedSize::SceneHeight);
 
     scene = new Scene(this);
 
@@ -25,15 +25,10 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent) {
     background = new Background(this);
 
     auto mainMenuWindow  = new MainMenuWindow();
-    WindowSelector::select(mainMenuWindow);
+    WindowSelector::show(mainMenuWindow);
 }
 
 MainWindow::~MainWindow() {
     delete background;
     delete view;
-}
-
-void MainWindow::startGame(GameConfig config) {
-    auto gameWindow = new GameWindow(config);
-    WindowSelector::select(gameWindow);
 }

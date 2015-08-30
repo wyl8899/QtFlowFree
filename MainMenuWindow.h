@@ -28,9 +28,6 @@ public:
 
 private:
     ItemList* itemList;
-
-public slots:
-    void play();
 };
 
 #endif // MAINMENUWINDOW_H

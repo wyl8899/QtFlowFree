@@ -21,8 +21,13 @@ public:
 
     static void setAlignHCenter(QGraphicsItem *item) {
         auto width = item->boundingRect().width();
-        item->setX((common::PredefinedSize::SceneWidth - width) * 0.5);
+        item->setX((common::predefinedSize::SceneWidth - width) * 0.5);
     }
+    static void setAlignVCenter(QGraphicsItem *item) {
+        auto height = item->boundingRect().height();
+        item->setY((common::predefinedSize::SceneHeight - height) * 0.5);
+    }
+
 private:
     QGraphicsScene* scene;
 };

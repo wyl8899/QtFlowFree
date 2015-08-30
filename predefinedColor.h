@@ -9,11 +9,8 @@ namespace common {
         NoIndex = -1
     };
 
-    enum {
-        NumOfPredefinedColors = 11
-    };
-
-    extern const char* predefinedColors[NumOfPredefinedColors];
+    extern const int NumOfPredefinedColors;
+    extern const char* predefinedColors[];
 
     QColor getColor(common::VisibleItemID item, int subIndex = NoIndex);
 }

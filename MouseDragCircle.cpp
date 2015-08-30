@@ -33,7 +33,7 @@ void MouseDragCircle::hide() {
 
 void MouseDragCircle::paint(QPointF point) {
     itemList->clear();
-    qreal diameter = common::PredefinedSize::MouseDragCircleSize;
+    qreal diameter = common::predefinedSize::MouseDragCircleSize;
     qreal radius = diameter * 0.5;
     qreal x = point.x() - radius, y = point.y() - radius;
     auto circle = new QGraphicsEllipseItem(x, y, diameter, diameter);

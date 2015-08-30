@@ -10,12 +10,16 @@ private:
     typedef common::WindowMode Mode;
 
 public:
-    static void select(Window* window) {
-        if (currentWindow != nullptr) {
-            delete currentWindow;
-        }
+    static void show(Window* window) {
+        kill();
         currentWindow = window;
         currentMode = window->mode();
+    }
+
+    static void kill() {
+        if (currentWindow != nullptr)
+            delete currentWindow;
+        currentWindow = nullptr;
     }
 
 private:

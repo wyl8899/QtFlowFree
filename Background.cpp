@@ -31,8 +31,8 @@ Background::Background(QObject *parent) : QObject(parent) {
 void Background::addFloatingLine() {
     auto floatingLine = new FloatingLine;
     auto line = floatingLine->lineItem;
-    const int sceneWidth = common::PredefinedSize::SceneWidth;
-    const int sceneHeight = common::PredefinedSize::SceneHeight;
+    const int sceneWidth = common::predefinedSize::SceneWidth;
+    const int sceneHeight = common::predefinedSize::SceneHeight;
     const int lineLength = sceneWidth;
     const int lineWidth = line->pen().width();
     const int extendedLineLength = lineLength + lineWidth; // RoundCap taken into account
@@ -82,7 +82,7 @@ void Background::paint() {
 FloatingLine::FloatingLine(QGraphicsItem *parent) : QGraphicsObject(parent) {
     lineItem = new QGraphicsLineItem();
     int colorIndex = std::uniform_int_distribution<>(0, common::NumOfPredefinedColors - 1)(gen);
-    auto color = QColor(common::predefinedColors[colorIndex]).darker(600);
+    auto color = QColor(common::predefinedColors[colorIndex]).darker(350);
     auto brush = QBrush(color);
     qreal width = 49;
     lineItem->setPen(QPen(brush, width, Qt::SolidLine, Qt::RoundCap));

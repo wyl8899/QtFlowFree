@@ -2,6 +2,8 @@
 #include <QColor>
 
 namespace common {
+    const int NumOfPredefinedColors = 11;
+
     const char* predefinedColors[NumOfPredefinedColors] = {
         "red",
         "yellow",
@@ -40,12 +42,12 @@ namespace common {
     QColor getColor(VisibleItemID item, int subIndex) {
         switch (item) {
         case Background: return QColor("black");
-        case Text: break;
         case GridBgColor: return getIndexGridBgColor(subIndex);
         case GridLine: return QColor("yellow").lighter();
-        case Circle:
+        case Circle: // same as PipeLine, fall through
         case PipeLine: return getIndexColor(subIndex);
         case MouseDragCircle: return getIndexMouseDragCircleColor(subIndex);
+        default: break;
         }
         return QColor(0, 0, 0);
     }

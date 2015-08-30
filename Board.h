@@ -48,6 +48,7 @@ public:
     int getIndex(Point point);
     bool isStart(Point point);
     Point getTheOther(int index, Point point);
+    int getSize();
 
 private:
     enum {
@@ -56,6 +57,8 @@ private:
 
     ItemList* itemList;
     std::vector<PointPair> points;
+
+    int size;
 
     void paint();
     void paintPoint(Point point, int index);

@@ -16,7 +16,7 @@ class GameWindow : public QObject, public FlowFreeWindowBase, private LocatorReg
     Q_OBJECT
 
 public:
-    explicit GameWindow(GameConfig config, QObject* parent = 0);
+    explicit GameWindow(int levelID, QObject* parent = 0);
     ~GameWindow();
 
     Mode mode() {
@@ -28,6 +28,9 @@ private:
     Grid* grid;
     MouseDragCircle* mouseDragCircle;
     ItemList* itemList;
+
+public slots:
+    void newGame(int levelID);
 };
 
 #endif // GAMEWINDOW_H
