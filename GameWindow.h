@@ -12,10 +12,14 @@
 
 #include <QObject>
 
+class PuzzleSolver;
+
 class GameWindow : public QObject, public FlowFreeWindowBase, private LocatorRegister<GameWindow> {
     Q_OBJECT
 
 public:
+    friend class PuzzleSolver;
+
     explicit GameWindow(int levelID, QObject* parent = 0);
     ~GameWindow();
 
@@ -28,6 +32,8 @@ private:
     Grid* grid;
     MouseDragCircle* mouseDragCircle;
     ItemList* itemList;
+
+    void solve(int levelID);
 
 public slots:
     void newGame(int levelID);

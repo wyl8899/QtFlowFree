@@ -2,6 +2,10 @@
 #include "MainMenuWindow.h"
 #include "WindowSelector.h"
 #include "builtinLevels.h"
+#include "PuzzleSolver.h"
+
+#include <QThread>
+#include <QApplication>
 
 GameWindow::GameWindow(int levelID, QObject *parent) : QObject(parent) {
     auto config = builtinLevels::getBuiltinLevel(levelID);
@@ -14,16 +18,26 @@ GameWindow::GameWindow(int levelID, QObject *parent) : QObject(parent) {
     itemList = new ItemList(this);
 
     const int textHMargin = 4;
+    const int topTextY = 20;
+    const int bottomTextY = common::predefinedSize::SceneHeight - 100;
 
     auto backText = new ClickableText();
     backText->setHtml(R"(<p style="font-family:Arial;font-size:27px;color:white">Back</p>)");
     backText->setZValue(common::VisibleItemID::Text);
     backText->setX(textHMargin);
-    backText->setY(20);
+    backText->setY(topTextY);
     connect(backText, &ClickableText::released, [](){WindowSelector::show(new MainMenuWindow);});
     itemList->addItem(backText);
 
-    const int bottomTextY = common::predefinedSize::SceneHeight - 100;
+    auto solveText = new ClickableText();
+    solveText->setHtml(R"(<p style="font-family:Arial;font-size:27px;color:white">Auto Solve</p>)");
+    solveText->setZValue(common::VisibleItemID::Text);
+    solveText->setX(common::predefinedSize::SceneWidth - textHMargin - solveText->boundingRect().width());
+    solveText->setY(topTextY);
+    connect(solveText, &ClickableText::released, [this, levelID](){
+        solve(levelID);
+    });
+    itemList->addItem(solveText);
 
     auto restartText = new ClickableText();
     restartText->setHtml(R"(<p style="font-family:Arial;font-size:27px;color:white">Restart</p>)");
@@ -67,6 +81,13 @@ GameWindow::~GameWindow(){
     delete mouseDragCircle;
     delete puzzle;
     delete grid;
+}
+
+void GameWindow::solve(int levelID) {
+    qDebug() << "GameWindow::solve" << levelID;
+    auto config = builtinLevels::getBuiltinLevel(levelID);
+    auto solver = new PuzzleSolver(config, this);
+    solver->solve();
 }
 
 void GameWindow::newGame(int levelID) {

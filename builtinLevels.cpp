@@ -6,16 +6,15 @@
 
 namespace builtinLevels {
 
-const int NumOfBuiltinLevels = 7;
+const int NumOfBuiltinLevels = 6;
 
 const char* builtinLevels[NumOfBuiltinLevels] = {
-    "halfwayDone",
     "5a",
     "5b",
     "6a",
     "6b",
     "7a",
-    "7b"
+    "7b",
 };
 
 GameConfig getBuiltinLevel(int levelID) {

@@ -7,6 +7,9 @@ Strategy::Strategy(int numOfColors, QObject *parent) : QObject(parent) {
     current = NoCurrentColor;
 }
 
+Strategy::~Strategy() {
+}
+
 void Strategy::paint() {
     for (auto &i : pipes) {
         if (i != nullptr)

@@ -8,11 +8,11 @@
 #include <QString>
 #include <vector>
 
-class Strategy : public QObject
-{
+class Strategy : public QObject, private LocatorRegister<Strategy> {
     Q_OBJECT
 public:
     explicit Strategy(int numOfColors, QObject *parent = 0);
+    ~Strategy();
 
     void paint();
 
@@ -27,6 +27,10 @@ public:
     void startDraw(Point point);
     void extendDraw(Point point);
     void finishDraw();
+
+    std::vector<Pipe*>& getPipes() {
+        return pipes;
+    }
 
 private:
     enum {

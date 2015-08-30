@@ -20,7 +20,6 @@ SOURCES +=\
     Scene.cpp \
     Board.cpp \
     Point.cpp \
-    test.cpp \
     Grid.cpp \
     Puzzle.cpp \
     Pipe.cpp \
@@ -36,7 +35,8 @@ SOURCES +=\
     MainMenuWindow.cpp \
     GameWindow.cpp \
     ClickableText.cpp \
-    builtinLevels.cpp
+    builtinLevels.cpp \
+    PuzzleSolver.cpp
 
 HEADERS  += MainWindow.h \
     Grid.h \
@@ -47,7 +47,6 @@ HEADERS  += MainWindow.h \
     Board.h \
     GameConfig.h \
     Puzzle.h \
-    test.h \
     View.h \
     common.h \
     paint_common.h \
@@ -61,7 +60,8 @@ HEADERS  += MainWindow.h \
     MainMenuWindow.h \
     WindowSelector.h \
     ClickableText.h \
-    builtinLevels.h
+    builtinLevels.h \
+    PuzzleSolver.h
 
 FORMS +=
 

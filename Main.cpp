@@ -1,7 +1,6 @@
 #include "MainWindow.h"
 #include "GameConfig.h"
-#include "Puzzle.h"
-#include "test.h"
+#include "builtinLevels.h"
 
 #include <QApplication>
 #include <QDebug>
